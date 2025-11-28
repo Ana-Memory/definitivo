@@ -24,65 +24,39 @@ public class JDialogOpciones extends javax.swing.JDialog {
      */
       public JDialogOpciones(java.awt.Frame parent, boolean modal, String usuario, String contrasena) {
        super(parent, modal);
-        initComponents();
-        ajustarImagenLogo();
-        ajustarImagenSalida();
-        ajustarImagenTienda();
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-       
-        try (Connection con = Conexion.getConexion()) {
-            String sqlCliente = "SELECT nombre FROM cliente WHERE usuario=?";
-            PreparedStatement psC = con.prepareStatement(sqlCliente);
-            String sqlVeterinario = "SELECT nombre FROM veterinario WHERE usuario=?";
-            PreparedStatement psV = con.prepareStatement(sqlVeterinario);
-            String sqlAdmin = "SELECT nombre FROM administrador WHERE usuario=?";
-            PreparedStatement psA = con.prepareStatement(sqlAdmin);
-           
-            psC.setString(1, usuario);
-            psV.setString(1, usuario);
-            psA.setString(1, usuario);
+    initComponents();
+    ajustarImagenLogo();
+    ajustarImagenSalida();
+    ajustarImagenTienda();
+    this.usuario = usuario;
+    this.contrasena = contrasena;
 
-            ResultSet rsC = psC.executeQuery();
-            if (rsC.next()) {
-                String nombreCliente = rsC.getString("nombre");
-                jLabelTitulo.setText("Bienvenid@ " + nombreCliente + ". ¿Qué quieres hacer hoy?");
-                jLabelTitulo.revalidate();
-                jLabelTitulo.repaint();
+    try (Connection con = Conexion.getConexion()) {
+        String sql = "SELECT nombre, rol, id FROM usuario WHERE usuario=?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, usuario);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            String nombre = rs.getString("nombre");
+            String rol = rs.getString("rol");
+            idCliente = rs.getString("id");
+
+            jLabelTitulo.setText("Bienvenid@ " + nombre + ". ¿Qué quieres hacer hoy?");
+            jLabelTitulo.revalidate();
+            jLabelTitulo.repaint();
+
+            if ("Cliente".equalsIgnoreCase(rol)) {
                 jButtonPanel.setVisible(false);
                 jButtonPanel.setEnabled(false);
-            }
-           
-            ResultSet rsV = psV.executeQuery();
-            if (rsV.next()) {
-                String nombreVeterinario = rsV.getString("nombre");
-                jLabelTitulo.setText("Bienvenid@ " + nombreVeterinario + ". ¿Qué quieres hacer hoy?");
-                jLabelTitulo.revalidate();
-                jLabelTitulo.repaint();
-                jButtonPanel.setVisible(true);
-                jButtonPanel.setEnabled(true);
-                
-                String sql = "SELECT id FROM cliente";
-                PreparedStatement ps = con.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery();
-                
-                if (rs.next()){
-                    idCliente = rs.getString("id");
-                }
-            }
-           
-            ResultSet rsA = psA.executeQuery();
-            if (rsA.next()) {
-                String nombreAdmin = rsA.getString("nombre");
-                jLabelTitulo.setText("Bienvenid@ " + nombreAdmin + ". ¿Qué quieres hacer hoy?");
-                jLabelTitulo.revalidate();
-                jLabelTitulo.repaint();
+            } else { // Veterinario o Administrador
                 jButtonPanel.setVisible(true);
                 jButtonPanel.setEnabled(true);
             }
-        } catch (SQLException e) {
-            System.err.println(e);
         }
+    } catch (SQLException e) {
+        System.err.println(e);
+    }
     }
 
     /**

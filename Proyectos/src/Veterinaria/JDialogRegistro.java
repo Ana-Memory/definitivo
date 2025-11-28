@@ -176,48 +176,58 @@ public class JDialogRegistro extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
-        String usuario = jTextFieldUsuario.getText();
-        String contrasenya = new String(jPasswordFieldContrasenya.getPassword());
-        String nombre = jTextFieldNombre.getText();
-        String apellidos = jTextFieldApellidos.getText();
-        String telefono = jTextFieldTelefono.getText();
-        String correo = jTextFieldCorreo.getText();
-        String dni = jTextFieldId.getText();
-        
-        if (usuario.isEmpty() || contrasenya.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor rellene todos los campos", 
-                                                      "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        PreparedStatement ps = null;
-        
-        try (Connection con = Conexion.getConexion()){
-            String createUsuario = "CREATE USER IF NOT EXISTS'" + usuario + "'@'localhost' IDENTIFIED BY '" + contrasenya + "';";
-            con.createStatement().execute(createUsuario);
+    String usuario = jTextFieldUsuario.getText().trim();
+    String contrasenya = new String(jPasswordFieldContrasenya.getPassword()).trim();
+    String nombre = jTextFieldNombre.getText().trim();
+    String apellidos = jTextFieldApellidos.getText().trim();
+    String telefono = jTextFieldTelefono.getText().trim();
+    String correo = jTextFieldCorreo.getText().trim();
+    String dni = jTextFieldId.getText().trim();
 
-            String permisosUsuario = "GRANT SELECT ON veterinaria.* TO '" + usuario + "'@'localhost';";
-            con.createStatement().execute(permisosUsuario);
-            
-            permisosUsuario = "GRANT UPDATE ON veterinaria.mascota TO '" + usuario + "'@'localhost';";
-            con.createStatement().execute(permisosUsuario);
+    if (usuario.isEmpty() || contrasenya.isEmpty() || nombre.isEmpty() || apellidos.isEmpty()
+            || telefono.isEmpty() || correo.isEmpty() || dni.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Por favor rellene todos los campos", 
+            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Usuario creado, ya puedes iniciar sesión", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            
-            String datos = "INSERT INTO cliente (id, nombre, apellidos , telefono, correo, usuario) VALUES(?,?,?,?,?,?)";
-            ps = con.prepareStatement(datos);
+    try (Connection con = Conexion.getConexion()) {
+
+        // 1. Crear usuario MySQL
+        String createUsuarioSQL = "CREATE USER IF NOT EXISTS '" + usuario + "'@'localhost' IDENTIFIED BY '" + contrasenya + "'";
+        con.createStatement().execute(createUsuarioSQL);
+
+        // 2. Otorgar permisos sobre la base
+        String permisosSQL = "GRANT SELECT, UPDATE ON veterinaria.* TO '" + usuario + "'@'localhost'";
+        con.createStatement().execute(permisosSQL);
+
+        // 3. Insertar en la tabla usuario con rol Cliente
+        String insertSQL = "INSERT INTO usuario (id, nombre, apellidos, telefono, correo, usuario, rol) "
+                         + "VALUES (?, ?, ?, ?, ?, ?, 'Cliente')";
+        try (PreparedStatement ps = con.prepareStatement(insertSQL)) {
             ps.setString(1, dni);
             ps.setString(2, nombre);
             ps.setString(3, apellidos);
             ps.setString(4, telefono);
             ps.setString(5, correo);
             ps.setString(6, usuario);
-            ps.execute();
-        
-            this.dispose();
-        } catch (SQLException e) {
-            System.err.println(e);
-            javax.swing.JOptionPane.showMessageDialog(this, "Ocurrió un error al crear el usuario" + e.getMessage(),"Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+            ps.executeUpdate();
         }
+
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Usuario creado exitosamente. Ya puedes iniciar sesión.", 
+            "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        this.dispose(); // Cierra el diálogo
+
+    } catch (SQLException e) {
+        System.err.println(e);
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Ocurrió un error al crear el usuario: " + e.getMessage(),
+            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButtonIniciarActionPerformed
     
     private void ajustarImagenLogo() {

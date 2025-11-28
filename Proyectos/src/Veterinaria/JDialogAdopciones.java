@@ -22,6 +22,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 
 /**
  *
@@ -45,13 +47,13 @@ public class JDialogAdopciones extends javax.swing.JDialog {
         try (Connection con = Conexion.getConexion()) {
             jPanelMascotas.setLayout(new BoxLayout(jPanelMascotas, BoxLayout.Y_AXIS));
 
-            String sql = "SELECT nombre, especie, edad, sexo, peso, vacunas FROM mascota WHERE id_cliente IS NULL";
+            String sql = "SELECT nombre, especie, edad, sexo, peso, vacunas FROM mascota WHERE id_dueno IS NULL";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             List<Object[]> lista = new ArrayList<>();
             while (rs.next()) {
-                Object[] m = new Object[7];
+                Object[] m = new Object[6];
                 m[0] = rs.getString("nombre");
                 m[1] = rs.getString("especie");
                 m[2] = rs.getString("edad");
@@ -61,132 +63,74 @@ public class JDialogAdopciones extends javax.swing.JDialog {
                 lista.add(m);
             }
 
-            Object[][] mascotas = lista.toArray(new Object[0][0]);
-            for (int i = 0; i < lista.size(); i++) {
-                Object[] datosMascotaActual = lista.get(i);
+            for (Object[] datosMascotaActual : lista) {
                 JPanel jPanelMascota = new JPanel(new BorderLayout());
                 jPanelMascota.setBackground(Color.white);
-                jPanelMascota.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                jPanelMascota.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-                String ruta="";
+                // Imagen
+                String ruta = "/recursos/default.jpg";
                 switch (datosMascotaActual[0].toString()) {
-                    case "Dante":
-                        ruta="src/recursos/dante.jpg";
-                        break;
-                    case "Pretzel":
-                        ruta="src/recursos/pretzel.jpg";
-                        break;
-                    case "Sheldon":
-                        ruta="src/recursos/sheldon.jpg";
-                        break;
-                    case "Blue":
-                        ruta="src/recursos/blue.jpg";
-                        break;
-                    case "Hamtaro":
-                        ruta="src/recursos/hamtaro.jpg";
-                        break;
-                    default:
-                        ruta="src/recursos/default.jpg";
-                        break;
+                    case "Dante": ruta = "/recursos/dante.jpg"; break;
+                    case "Pretzel": ruta = "/recursos/pretzel.jpg"; break;
+                    case "Sheldon": ruta = "/recursos/sheldon.jpg"; break;
+                    case "Blue": ruta = "/recursos/blue.jpg"; break;
+                    case "Hamtaro": ruta = "/recursos/hamtaro.jpg"; break;
+                    default: ruta = "/recursos/default.jpg"; break;
                 }
-                ImageIcon icono = new ImageIcon(ruta);
+                ImageIcon icono = new ImageIcon(getClass().getResource(ruta));
                 Image img = icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 JLabel lblImagen = new JLabel(new ImageIcon(img));
-                lblImagen.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-
+                lblImagen.setBorder(new EmptyBorder(0,0,0,10));
                 jPanelMascota.add(lblImagen, BorderLayout.WEST);
 
+                // Texto
                 JPanel panelTexto = new JPanel();
                 panelTexto.setBackground(Color.white);
                 panelTexto.setLayout(new BoxLayout(panelTexto, BoxLayout.Y_AXIS));
-                panelTexto.setBorder(BorderFactory.createEmptyBorder(35, 0, 0, 0));
+                panelTexto.setBorder(new EmptyBorder(10,0,0,0));
 
                 Font fuente = new Font("Candara", Font.ITALIC, 14);
-                Color color = new Color(52, 164, 175);
+                Color color = new Color(52,164,175);
                 Font fuenteBoton = new Font("Candara", Font.BOLD, 14);
-                Color colorBoton = new Color(255, 153, 0);
-                
-                JLabel espacio = new JLabel("");
-                
-                JLabel nombre = new JLabel("Nombre: " + datosMascotaActual[0]+".");
-                nombre.setFont(fuente);
-                nombre.setForeground(color);
-                
-                JLabel especie = new JLabel("Especie: " + datosMascotaActual[1]+".");
-                especie.setFont(fuente);
-                especie.setForeground(color);
-                
-                JLabel edad = new JLabel("Edad: " + datosMascotaActual[2]+".");
-                edad.setFont(fuente);
-                edad.setForeground(color);
-                
-                JLabel sexo = new JLabel("Sexo: " + datosMascotaActual[3]+".");
-                sexo.setFont(fuente);
-                sexo.setForeground(color);
-                
-                JLabel peso = new JLabel("Peso: " + datosMascotaActual[4]+".");
-                peso.setFont(fuente);
-                peso.setForeground(color);
-                
-                if (datosMascotaActual[5].equals("true")){
-                    JLabel vacunas = new JLabel("Tiene todas sus vacunas");
-                    vacunas.setFont(fuente);
-                    vacunas.setForeground(color);
-                } else {
-                    JLabel vacunas = new JLabel("No está vacunado");
-                    vacunas.setFont(fuente);
-                    vacunas.setForeground(color);
-                }
-                
-                panelTexto.add(espacio);
-                panelTexto.add(nombre);
-                panelTexto.add(especie);
-                panelTexto.add(edad);
-                panelTexto.add(sexo);
-                panelTexto.add(peso);
+                Color colorBoton = new Color(255,153,0);
 
-                String descripcion = "";
+                panelTexto.add(new JLabel("")); // espacio
+                panelTexto.add(new JLabel("Nombre: " + datosMascotaActual[0] + "."));
+                panelTexto.add(new JLabel("Especie: " + datosMascotaActual[1] + "."));
+                panelTexto.add(new JLabel("Edad: " + datosMascotaActual[2] + "."));
+                panelTexto.add(new JLabel("Sexo: " + datosMascotaActual[3] + "."));
+                panelTexto.add(new JLabel("Peso: " + datosMascotaActual[4] + "."));
 
-                switch (datosMascotaActual[0].toString()) {
-                    case "Dante":
-                        descripcion = "Nuestro querido Dante es un perro enérgico y muy amistoso. Perfecto para acompañarte en tus caminatas mañaneras.";
-                        break;
-                    case "Pretzel":
-                        descripcion = "Pretzel es una gatita que requiere mucha atención, pero es muy cariñosa y mansa.";
-                        break;
-                    case "Sheldon":
-                        descripcion = "Sheldon es perfecto para los amantes de los reptiles y los que prefieren mascotas tranquilas.";
-                        break;
-                    case "Blue":
-                        descripcion = "Si quieres una mascota cariñosa, inteligente y sociable, ¡Blue es para ti!";
-                        break;
-                    case "Hamtaro":
-                        descripcion = "Nuestro pequeño Hamtaro es tierno, tímido y tranquilo.";
-                        break;
-                    default:
-                        descripcion = datosMascotaActual[0] + " ha llegado recientemente al refugio. ¡Dale una oportunidad!";
-                        break;
-                }
-                
+                boolean vacunado = (boolean) datosMascotaActual[5];
+                panelTexto.add(new JLabel(vacunado ? "Tiene todas sus vacunas" : "No está vacunado"));
+
+                // Descripción
+                String descripcion = switch (datosMascotaActual[0].toString()) {
+                    case "Dante" -> "Nuestro querido Dante es un perro enérgico y muy amistoso. Perfecto para acompañarte en tus caminatas mañaneras.";
+                    case "Pretzel" -> "Pretzel es una gatita que requiere mucha atención, pero es muy cariñosa y mansa.";
+                    case "Sheldon" -> "Sheldon es perfecto para los amantes de los reptiles y los que prefieren mascotas tranquilas.";
+                    case "Blue" -> "Si quieres una mascota cariñosa, inteligente y sociable, ¡Blue es para ti!";
+                    case "Hamtaro" -> "Nuestro pequeño Hamtaro es tierno, tímido y tranquilo.";
+                    default -> datosMascotaActual[0] + " ha llegado recientemente al refugio. ¡Dale una oportunidad!";
+                };
                 JLabel des = new JLabel(descripcion);
                 des.setFont(fuente);
                 des.setForeground(color);
                 panelTexto.add(des);
-                
-                JButton jButtonAdopta = new JButton();
-                jButtonAdopta.setText("ADOPTA YA");
+
+                // Botón adopción
+                JButton jButtonAdopta = new JButton("ADOPTA YA");
                 jButtonAdopta.setFont(fuenteBoton);
                 jButtonAdopta.setForeground(colorBoton);
                 panelTexto.add(jButtonAdopta);
-                
-                final Object[] mascota = datosMascotaActual;
-                jButtonAdopta.addActionListener(e -> {
-                    jButtonAdoptaActionPerformed(mascota);
-                });
+
+                jButtonAdopta.addActionListener(e -> jButtonAdoptaActionPerformed(datosMascotaActual));
 
                 jPanelMascota.add(panelTexto, BorderLayout.CENTER);
                 jPanelMascotas.add(jPanelMascota);
             }
+
             jPanelMascotas.revalidate();
             jPanelMascotas.repaint();
         } catch (SQLException e) {
@@ -311,35 +255,37 @@ public class JDialogAdopciones extends javax.swing.JDialog {
 
     private void jButtonAdoptaActionPerformed(Object[] mascota) {
         String nombre = (String) mascota[0];
-        String sql = "UPDATE mascota SET id_cliente = ? WHERE nombre = ?";
-        String id="";
-        try {
-            Connection conPer = Conexion.getConexionUsuario(usuario,contrasena);
-            String sqlCliente = "SELECT id FROM cliente WHERE usuario=?";
-            PreparedStatement psC = conPer.prepareStatement(sqlCliente);
-            
-            psC.setString(1, usuario);
-            
-            ResultSet rsC = psC.executeQuery();
-            if (rsC.next()) {
-                id = rsC.getString("id");
-            }
-            
-            PreparedStatement ps = conPer.prepareStatement(sql);
-            ps.setString(1, id);
-            ps.setString(2, nombre);
-            int opcion = JOptionPane.showConfirmDialog(this,"¿Vas a adoptar a " + nombre + "?", "Confirmar adopción", JOptionPane.YES_NO_OPTION);
+        try (Connection con = Conexion.getConexionUsuario(usuario, contrasena)) {
+            // Obtener id del usuario desde la tabla usuario
+            String sqlId = "SELECT id FROM usuario WHERE usuario = ?";
+            PreparedStatement psId = con.prepareStatement(sqlId);
+            psId.setString(1, usuario);
+            ResultSet rs = psId.executeQuery();
 
-            if (opcion == JOptionPane.YES_OPTION) {
-                int filas = ps.executeUpdate(); 
-                if (filas > 0) {
-                    JOptionPane.showMessageDialog(this, "¡Muchas gracias! ¡Mandaremos a " + nombre + " a su nuevo hogar tras una evaluación.");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Error: no se pudo actualizar el registro de la mascota.");
+            String idUsuario = null;
+            if (rs.next()) {
+                idUsuario = rs.getString("id");
+            }
+
+            if (idUsuario != null) {
+                String sqlUpdate = "UPDATE mascota SET id_dueno = ? WHERE nombre = ?";
+                PreparedStatement psUpdate = con.prepareStatement(sqlUpdate);
+                psUpdate.setString(1, idUsuario);
+                psUpdate.setString(2, nombre);
+
+                int opcion = JOptionPane.showConfirmDialog(this, "¿Vas a adoptar a " + nombre + "?", "Confirmar adopción", JOptionPane.YES_NO_OPTION);
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    int filas = psUpdate.executeUpdate();
+                    if (filas > 0) {
+                        JOptionPane.showMessageDialog(this, "¡Muchas gracias! ¡Mandaremos a " + nombre + " a su nuevo hogar tras una evaluación.");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error: no se pudo actualizar el registro de la mascota.");
+                    }
+                    this.dispose();
                 }
-                this.dispose();
-            } 
-        } catch (SQLException e){
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }          
