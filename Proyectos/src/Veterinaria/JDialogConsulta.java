@@ -241,7 +241,7 @@ public class JDialogConsulta extends javax.swing.JDialog {
                     "Consulta registrada correctamente.");
                 
                
-               JDialogCitas citas = new JDialogCitas(JDialogConsulta.this, true, IdGenerado, id_cliente); 
+               JDialogCitas citas = new JDialogCitas(JDialogConsulta.this, true, id_cliente); 
                citas.setVisible(true);
 
             }
@@ -266,10 +266,6 @@ public class JDialogConsulta extends javax.swing.JDialog {
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
         this.dispose();
-        
-       
-
-        
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
     private void jTextFieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecioActionPerformed

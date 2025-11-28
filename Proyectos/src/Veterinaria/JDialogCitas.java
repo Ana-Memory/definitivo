@@ -4,7 +4,6 @@
  */
 package Veterinaria;
 
-import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,22 +26,16 @@ import java.util.ArrayList;
  *
  * @author DAM2Alu13
  */
-public class JDialogCitas extends javax.swing.JDialog {
-        
-    
-    
-    
+public class JDialogCitas extends javax.swing.JDialog { 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogCitas.class.getName());
    
     /**
      * Creates new form Citas
      */
-   // private static final Set<String> reservas = new HashSet<>();
+    private static final Set<String> reservas = new HashSet<>();
     String id_cliente ;
-    int id_consulta;
-    public JDialogCitas(java.awt.Dialog parent, boolean modal, int idGenerado, String idCliente) {
+    public JDialogCitas(java.awt.Dialog parent, boolean modal, String idCliente) {
         super(parent, modal);
-        this.id_consulta = idGenerado;
         this.id_cliente = idCliente;
         initComponents();
         ajustarImagenLogo();
@@ -66,8 +59,8 @@ public class JDialogCitas extends javax.swing.JDialog {
     }
 
    private void configurarDateChooser() {
-    jDateChooserCitas.addPropertyChangeListener("date", e -> {
-        if (jDateChooserCitas.getDate() != null) {
+    jDateChooser1.addPropertyChangeListener("date", e -> {
+        if (jDateChooser1.getDate() != null) {
             jSpinnerhora.setEnabled(true);
            
             if (!(jSpinnerhora.getModel() instanceof javax.swing.SpinnerListModel)) {
@@ -93,9 +86,9 @@ public class JDialogCitas extends javax.swing.JDialog {
         logo = new javax.swing.JLabel();
         jButtonReserva = new javax.swing.JButton();
         jButtonSalir = new javax.swing.JButton();
-        jDateChooserCitas = new com.toedter.calendar.JDateChooser();
         jSpinnerhora = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -121,10 +114,6 @@ public class JDialogCitas extends javax.swing.JDialog {
             }
         });
 
-        jDateChooserCitas.setBackground(new java.awt.Color(51, 51, 51));
-        jDateChooserCitas.setForeground(new java.awt.Color(255, 255, 255));
-        jDateChooserCitas.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-
         jLabel5.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(105, 211, 183));
         jLabel5.setText("Reserva ya tu cita");
@@ -145,11 +134,11 @@ public class JDialogCitas extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(117, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jDateChooserCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(181, 181, 181)))
                 .addGap(50, 50, 50))
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,12 +146,12 @@ public class JDialogCitas extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooserCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSpinnerhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonReserva)
                     .addComponent(jButtonSalir))
@@ -184,15 +173,11 @@ public class JDialogCitas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReservaActionPerformed
-      Date fecha = jDateChooserCitas.getDate();
+     Date fecha = jDateChooser1.getDate();
     Object horaObj = jSpinnerhora.getValue();
 
     if (fecha == null || horaObj == null) {
         JOptionPane.showMessageDialog(this, "Seleccione fecha y hora", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (id_consulta <= 0) {
-        JOptionPane.showMessageDialog(this, "La consulta no está definida. Vuelva a crear la cita desde Consulta.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -222,8 +207,8 @@ public class JDialogCitas extends javax.swing.JDialog {
     return;
     }
     try (Connection conn = Conexion.getConexion()) {
-        conn.setAutoCommit(true); // asegura confirmación
-        String sqlReserva = "INSERT INTO reserva (id_cliente, id_consulta, fecha, hora) VALUES (?, ?, ?, ?)";
+        conn.setAutoCommit(true);
+        String sqlReserva = "INSERT INTO reserva (id_cliente, fecha, hora) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sqlReserva)) {
             if (id_cliente == null || id_cliente.isEmpty()) {
@@ -231,9 +216,8 @@ public class JDialogCitas extends javax.swing.JDialog {
             } else {
                 ps.setString(1, id_cliente);
             }
-            ps.setInt(2, id_consulta);
-            ps.setDate(3, sqlFecha);
-            ps.setTime(4, sqlHora);
+            ps.setDate(2, sqlFecha);
+            ps.setTime(3, sqlHora);
 
             int filas = ps.executeUpdate();
             if (filas == 0) {
@@ -249,15 +233,15 @@ public class JDialogCitas extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(this, "Error al guardar cita: " + ex.getMessage(), "Error BD", JOptionPane.ERROR_MESSAGE);
     }
     
-        /*
-        String clave = cal.getTime() + " " + hora;
+        
+        String clave = cal.getTime() + " " + sqlHora;
 
         if (reservas.contains(clave)) {
             JOptionPane.showMessageDialog(this, "Ya existe una cita en esa hora", "Ocupado", JOptionPane.WARNING_MESSAGE);
         } else {
             reservas.add(clave);
             JOptionPane.showMessageDialog(this, "Cita reservada para " + clave, "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-        }*/
+        }
               
     }//GEN-LAST:event_jButtonReservaActionPerformed
 
@@ -286,7 +270,7 @@ public class JDialogCitas extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    //public static void main(String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -305,11 +289,11 @@ public class JDialogCitas extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-      /*  java.awt.EventQueue.invokeLater(new Runnable() {
+       java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
       
             public void run() {
-                Citas dialog = new Citas(new javax.swing.JDialog(), true);
+                JDialogCitas dialog = new JDialogCitas(new javax.swing.JDialog(), true, "");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -319,12 +303,12 @@ public class JDialogCitas extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-    }*/
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonReserva;
     private javax.swing.JButton jButtonSalir;
-    private com.toedter.calendar.JDateChooser jDateChooserCitas;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerhora;

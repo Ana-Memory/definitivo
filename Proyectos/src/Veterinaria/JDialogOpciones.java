@@ -16,7 +16,7 @@ import java.sql.DriverManager;
 public class JDialogOpciones extends javax.swing.JDialog {
     private String usuario;
     private String contrasena;
-    
+    private String idCliente;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogOpciones.class.getName());
 
     /**
@@ -61,6 +61,14 @@ public class JDialogOpciones extends javax.swing.JDialog {
                 jLabelTitulo.repaint();
                 jButtonPanel.setVisible(true);
                 jButtonPanel.setEnabled(true);
+                
+                String sql = "SELECT id FROM cliente";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                
+                if (rs.next()){
+                    idCliente = rs.getString("id");
+                }
             }
            
             ResultSet rsA = psA.executeQuery();
@@ -249,7 +257,8 @@ public class JDialogOpciones extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonSalidaActionPerformed
 
     private void jButtonAgendarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgendarCitaActionPerformed
-        // TODO add your handling code here:
+        JDialogCitas c = new JDialogCitas(JDialogOpciones.this, true,idCliente);
+        c.setVisible(true);
     }//GEN-LAST:event_jButtonAgendarCitaActionPerformed
 
     private void jButtonHistorialMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHistorialMascotaActionPerformed
