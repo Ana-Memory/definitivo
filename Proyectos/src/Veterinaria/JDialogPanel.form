@@ -130,6 +130,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="ENTRAR"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAdministradoresActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

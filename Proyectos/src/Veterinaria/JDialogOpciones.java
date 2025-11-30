@@ -236,7 +236,8 @@ public class JDialogOpciones extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonAgendarCitaActionPerformed
 
     private void jButtonHistorialMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHistorialMascotaActionPerformed
-        // TODO add your handling code here:
+        JDialogHistorial h = new JDialogHistorial(JDialogOpciones.this, true, idCliente);
+        h.setVisible(true);
     }//GEN-LAST:event_jButtonHistorialMascotaActionPerformed
 
     private void jButtonPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPanelActionPerformed

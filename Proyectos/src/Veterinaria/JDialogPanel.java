@@ -93,6 +93,11 @@ public class JDialogPanel extends javax.swing.JDialog {
         jButtonAdministradores.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
         jButtonAdministradores.setForeground(new java.awt.Color(255, 255, 255));
         jButtonAdministradores.setText("ENTRAR");
+        jButtonAdministradores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdministradoresActionPerformed(evt);
+            }
+        });
         jPanelAdministrador.add(jButtonAdministradores);
 
         jPanelVeterinario.setBackground(new java.awt.Color(255, 255, 255));
@@ -176,6 +181,12 @@ public class JDialogPanel extends javax.swing.JDialog {
         vet.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonVeterinariosActionPerformed
+
+    private void jButtonAdministradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdministradoresActionPerformed
+        JDialogpanelAdministrador ad = new JDialogpanelAdministrador(JDialogPanel.this, true);
+        ad.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonAdministradoresActionPerformed
 
     /**
      * @param args the command line arguments
