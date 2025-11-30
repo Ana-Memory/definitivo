@@ -33,10 +33,12 @@ public class JDialogCitas extends javax.swing.JDialog {
      * Creates new form Citas
      */
     private static final Set<String> reservas = new HashSet<>();
-    String id_cliente ;
-    public JDialogCitas(java.awt.Dialog parent, boolean modal, String idCliente) {
+    private String id_cliente ;
+    private int id_consulta ;
+    public JDialogCitas(java.awt.Dialog parent, boolean modal, String idCliente, int IdGenerado) {
         super(parent, modal);
         this.id_cliente = idCliente;
+        this.id_consulta = IdGenerado;
         initComponents();
         ajustarImagenLogo();
         configurarSpinnerHora();
@@ -122,9 +124,6 @@ public class JDialogCitas extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,12 +139,17 @@ public class JDialogCitas extends javax.swing.JDialog {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(181, 181, 181)))
                 .addGap(50, 50, 50))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,7 +212,7 @@ public class JDialogCitas extends javax.swing.JDialog {
     }
     try (Connection conn = Conexion.getConexion()) {
         conn.setAutoCommit(true);
-        String sqlReserva = "INSERT INTO reserva (id_cliente, fecha, hora) VALUES (?, ?, ?, ?)";
+        String sqlReserva = "INSERT INTO reserva (id_dueno, id_consulta, fecha, hora) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sqlReserva)) {
             if (id_cliente == null || id_cliente.isEmpty()) {
@@ -216,8 +220,9 @@ public class JDialogCitas extends javax.swing.JDialog {
             } else {
                 ps.setString(1, id_cliente);
             }
-            ps.setDate(2, sqlFecha);
-            ps.setTime(3, sqlHora);
+            ps.setInt(2, id_consulta);
+            ps.setDate(3, sqlFecha);
+            ps.setTime(4, sqlHora);
 
             int filas = ps.executeUpdate();
             if (filas == 0) {
@@ -293,7 +298,7 @@ public class JDialogCitas extends javax.swing.JDialog {
             @Override
       
             public void run() {
-                JDialogCitas dialog = new JDialogCitas(new javax.swing.JDialog(), true, "");
+                JDialogCitas dialog = new JDialogCitas(new javax.swing.JDialog(), true, "", 0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

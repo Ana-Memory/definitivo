@@ -11,13 +11,13 @@ package Veterinaria;
 public class JDialogPanelVeterinario extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogPanelVeterinario.class.getName());
-
     /**
      * Creates new form JDialogPanelVeterinario
      */
     public JDialogPanelVeterinario(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo();
     }
 
     /**
@@ -29,22 +29,104 @@ public class JDialogPanelVeterinario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        logo = new javax.swing.JLabel();
+        jButtonCitas = new javax.swing.JButton();
+        jButtonMascotas = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
+
+        jButtonCitas.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonCitas.setForeground(new java.awt.Color(105, 211, 183));
+        jButtonCitas.setText("Ver citas");
+        jButtonCitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCitasActionPerformed(evt);
+            }
+        });
+
+        jButtonMascotas.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonMascotas.setForeground(new java.awt.Color(52, 164, 175));
+        jButtonMascotas.setText("Ver mascotas");
+        jButtonMascotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMascotasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCitas, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonMascotas, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(19, 19, 19))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonCitas)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonMascotas)))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCitasActionPerformed
+        JDialogVeterinarioCitas vc = new JDialogVeterinarioCitas(JDialogPanelVeterinario.this, true);
+        vc.setVisible(true);
+    }//GEN-LAST:event_jButtonCitasActionPerformed
+
+    private void jButtonMascotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMascotasActionPerformed
+        JDialogVeterinarioMascotas vm = new JDialogVeterinarioMascotas(JDialogPanelVeterinario.this, true);
+        vm.setVisible(true);
+    }//GEN-LAST:event_jButtonMascotasActionPerformed
+    
+    private void ajustarImagenLogo() {
+    // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
+
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
     /**
      * @param args the command line arguments
      */
@@ -83,5 +165,9 @@ public class JDialogPanelVeterinario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCitas;
+    private javax.swing.JButton jButtonMascotas;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }

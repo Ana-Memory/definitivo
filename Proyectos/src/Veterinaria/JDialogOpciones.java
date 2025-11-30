@@ -217,7 +217,7 @@ public class JDialogOpciones extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TiendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TiendaMouseClicked
-        JDialogTienda t = new JDialogTienda(JDialogOpciones.this, true);
+        JDialogTienda t = new JDialogTienda(JDialogOpciones.this, true, idCliente);
         t.setVisible(true);
     }//GEN-LAST:event_TiendaMouseClicked
 
@@ -231,7 +231,7 @@ public class JDialogOpciones extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonSalidaActionPerformed
 
     private void jButtonAgendarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgendarCitaActionPerformed
-        JDialogCitas c = new JDialogCitas(JDialogOpciones.this, true,idCliente);
+        JDialogConsulta c = new JDialogConsulta(JDialogOpciones.this, true, idCliente);
         c.setVisible(true);
     }//GEN-LAST:event_jButtonAgendarCitaActionPerformed
 

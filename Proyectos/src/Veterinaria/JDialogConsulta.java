@@ -9,15 +9,16 @@ import java.sql.*;
  * @author DAM2Alu13
  */
 public class JDialogConsulta extends javax.swing.JDialog {
-    
+    private String idCliente;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogConsulta.class.getName());
 
     /**
      * Creates new form Consulta
      */
-    public JDialogConsulta(java.awt.Dialog parent, boolean modal) {
+    public JDialogConsulta(java.awt.Dialog parent, boolean modal, String idCliente) {
         super(parent, modal);
         initComponents();
+        this.idCliente = idCliente;
         ajustarImagenLogo();
     }
     
@@ -93,6 +94,7 @@ public class JDialogConsulta extends javax.swing.JDialog {
         jPanel2.add(jLabel2);
 
         jTextFieldPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldPrecio.setText("22.0");
         jTextFieldPrecio.setEnabled(false);
         jTextFieldPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,8 +148,9 @@ public class JDialogConsulta extends javax.swing.JDialog {
                 .addComponent(jButtonSiguiente)
                 .addGap(47, 47, 47))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                 .addGap(62, 62, 62))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -159,11 +162,14 @@ public class JDialogConsulta extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -189,8 +195,6 @@ public class JDialogConsulta extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSiguienteActionPerformed
-        
-    //String tipo = jTextFieldTipo.getText();
     Double precio = Double.parseDouble(jTextFieldPrecio.getText());
     String id_cliente = jTextFieldid_cliente.getText().trim(); // puede estar vacío
     int id_mascota = Integer.parseInt(jTextFieldid_mascota.getText());
@@ -208,15 +212,11 @@ public class JDialogConsulta extends javax.swing.JDialog {
             
             javax.swing.JOptionPane.showMessageDialog(this, 
                 "Mascota encontrada: " + rsMascota.getString("nombre") + ". Podemos continuar.");
-            
-         
-            //Citas citas = new Citas(Consulta.this,true);
-            //citas.setVisible(true);
-            
+
             jButtonSiguiente.setEnabled(true);
             
             
-            String sqlInsert = "INSERT INTO consulta (tipo, precio, id_cliente, id_mascota) VALUES (?, ?, ?, ?)";
+            String sqlInsert = "INSERT INTO consulta (tipo, precio, id_dueno, id_mascota) VALUES (?, ?, ?, ?)";
              PreparedStatement psInsert = con.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
             psInsert.setString(1, (String) jComboBoxTipo.getSelectedItem());
             psInsert.setDouble(2, precio);
@@ -240,8 +240,9 @@ public class JDialogConsulta extends javax.swing.JDialog {
                 javax.swing.JOptionPane.showMessageDialog(this, 
                     "Consulta registrada correctamente.");
                 
-               
-               JDialogCitas citas = new JDialogCitas(JDialogConsulta.this, true, id_cliente); 
+                //Esto esta para forzar el result set, porque a veces no se generaba bien el id y daba error JDialogCitas
+               System.out.println("ID de consulta generado: " + IdGenerado);
+               JDialogCitas citas = new JDialogCitas(JDialogConsulta.this, true, id_cliente, IdGenerado); 
                citas.setVisible(true);
 
             }
@@ -252,7 +253,6 @@ public class JDialogConsulta extends javax.swing.JDialog {
                 "Datos incorrectos. La mascota con ID " + id_mascota + " no existe.",
                 "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
             
-            jButtonSiguiente.setEnabled(false);
         }
         
     } catch (SQLException e) {
@@ -330,7 +330,7 @@ public class JDialogConsulta extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JDialogConsulta dialog = new JDialogConsulta(new javax.swing.JDialog(), true);
+                JDialogConsulta dialog = new JDialogConsulta(new javax.swing.JDialog(), true, "");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

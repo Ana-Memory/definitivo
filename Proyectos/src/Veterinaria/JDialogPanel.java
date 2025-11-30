@@ -31,29 +31,25 @@ public class JDialogPanel extends javax.swing.JDialog {
         this.contrasena = contrasena;
        
         try (Connection con = Conexion.getConexionUsuario(usuario, contrasena)) {
-            String sqlVeterinario = "SELECT nombre FROM veterinario WHERE usuario=?";
-            PreparedStatement psV = con.prepareStatement(sqlVeterinario);
-            String sqlAdmin = "SELECT nombre FROM administrador WHERE usuario=?";
-            PreparedStatement psA = con.prepareStatement(sqlAdmin);
-           
-            psV.setString(1, usuario);
-            psA.setString(1, usuario);
+            String sqlUsuario = "SELECT rol FROM usuario WHERE usuario = ?";
+            PreparedStatement ps = con.prepareStatement(sqlUsuario);
+            ps.setString(1, usuario);
 
-            ResultSet rsV = psV.executeQuery();
-            if (rsV.next()) {
-                jButtonAdministradores.setEnabled(false);
-                String nombreVeterinario = rsV.getString("nombre");
-            } else {
-               ResultSet rsA = psA.executeQuery();
-                if (rsA.next()) {
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String rol = rs.getString("rol").trim();
+
+                if ("Veterinario".equalsIgnoreCase(rol)) {
+                    jButtonAdministradores.setEnabled(false);
+                    jButtonVeterinarios.setEnabled(true);
+                } else {
                     jButtonVeterinarios.setEnabled(false);
                     jButtonAdministradores.setEnabled(true);
-                    String nombreAdmin = rsA.getString("nombre");
-                } 
+                }
             }
-            
         } catch (SQLException e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 

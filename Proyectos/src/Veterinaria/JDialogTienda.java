@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDialogTienda extends javax.swing.JDialog {
     private int unidades = 0;
+    private String idCliente;
     private Map<String, Object[]> carrito = new LinkedHashMap<>();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogTienda.class.getName());
 
@@ -35,10 +36,11 @@ public class JDialogTienda extends javax.swing.JDialog {
      * Creates new form Tienda
      */
     DefaultTableModel dtm;
-    public JDialogTienda(java.awt.Dialog parent, boolean modal) {
+    public JDialogTienda(java.awt.Dialog parent, boolean modal, String idCliente) {
         super(parent, modal);
         initComponents();
         ajustarImagenLogo();
+        this.idCliente = idCliente;
         
         dtm = new DefaultTableModel();
         dtm.addColumn("Nombre");
@@ -526,6 +528,7 @@ public class JDialogTienda extends javax.swing.JDialog {
             return;
         }
         double totalCompra = 0.0;
+        int totalCantidad = 0;
         StringBuilder resumen = new StringBuilder();
 
         try (Connection con = Conexion.getConexion()) {
@@ -547,12 +550,15 @@ public class JDialogTienda extends javax.swing.JDialog {
                         return;
                     }
                 }
+
                 if (cantidad > 1) {
                     resumen.append(nombre).append(" (x").append(cantidad).append(") - ").append(precioTotal).append("€\n");
                 } else {
                     resumen.append(nombre).append(" - ").append(precioTotal).append("€\n");
                 }
+
                 totalCompra += precioTotal;
+                totalCantidad += cantidad;
             }
             resumen.append("\nTotal a pagar: ").append(totalCompra).append("€");
 
@@ -568,6 +574,13 @@ public class JDialogTienda extends javax.swing.JDialog {
                     psUpdate.setString(2, nombre);
                     psUpdate.executeUpdate();
                 }
+
+                String sqlCompra = "INSERT INTO compra (id_dueno, cantidad, precio) VALUES (?, ?, ?)";
+                PreparedStatement psCompra = con.prepareStatement(sqlCompra);
+                psCompra.setString(1, idCliente);
+                psCompra.setInt(2, totalCantidad);
+                psCompra.setDouble(3, totalCompra);
+                psCompra.executeUpdate();
 
                 JOptionPane.showMessageDialog(this, "Gracias por su compra");
                 carrito.clear();
@@ -647,7 +660,7 @@ public class JDialogTienda extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JDialogTienda dialog = new JDialogTienda(new javax.swing.JDialog(), true);
+                JDialogTienda dialog = new JDialogTienda(new javax.swing.JDialog(), true, "");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

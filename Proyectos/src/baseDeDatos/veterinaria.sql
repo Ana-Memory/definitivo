@@ -58,9 +58,9 @@ CREATE TABLE reserva (
 CREATE TABLE compra (
     id INT auto_increment PRIMARY KEY,
     id_dueno VARCHAR(9) NOT NULL,
-    id_producto INT NOT NULL,
-    FOREIGN KEY (id_dueno) REFERENCES usuario(id),
-    FOREIGN KEY (id_producto) REFERENCES producto(id)
+    cantidad int NOT NULL,
+    precio double NOT NULL,
+    FOREIGN KEY (id_dueno) REFERENCES usuario(id)
 );
 
 CREATE TABLE agrega (
