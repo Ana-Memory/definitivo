@@ -31,7 +31,7 @@ public class JDialogTienda extends javax.swing.JDialog {
     private String idCliente;
     private Map<String, Object[]> carrito = new LinkedHashMap<>();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogTienda.class.getName());
-
+    private DefaultListModel<String> modeloListaCarrito = new DefaultListModel<>();
     /**
      * Creates new form Tienda
      */
@@ -408,30 +408,19 @@ public class JDialogTienda extends javax.swing.JDialog {
         }
 
         JDialog dialogCarrito = new JDialog(this, "Carrito de Compras", true);
-        dialogCarrito.setSize(400, 300);
+        dialogCarrito.setSize(420, 320);
         dialogCarrito.setLocationRelativeTo(this);
         dialogCarrito.setLayout(new BorderLayout());
 
-        DefaultListModel<String> modeloLista = new DefaultListModel<>();
-        for (Map.Entry<String, Object[]> entry : carrito.entrySet()) {
-            String nombre = entry.getKey();
-            int cantidad = (Integer) entry.getValue()[0];
-            double precioUnitario = (Double) entry.getValue()[1];
-            double precioTotal = cantidad * precioUnitario;
+        recargarListaCarrito();
 
-            if (cantidad > 1) {
-                modeloLista.addElement(nombre + " (x" + cantidad + ") - " + precioTotal + "€");
-            } else {
-                modeloLista.addElement(nombre + " - " + precioTotal + "€");
-            }
-        }
-
-        JList<String> listaCarrito = new JList<>(modeloLista);
+        JList<String> listaCarrito = new JList<>(modeloListaCarrito);
+        listaCarrito.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane scroll = new JScrollPane(listaCarrito);
         dialogCarrito.add(scroll, BorderLayout.CENTER);
 
-        JPanel panelBotones = new JPanel();
-        JButton btnQuitar = new JButton("Quitar productos");
+        JPanel panelBotones = new JPanel(new FlowLayout());
+        JButton btnQuitar = new JButton("Quitar");
         JButton btnModificarValores = new JButton("Alterar cantidades");
         JButton btnSalir = new JButton("OK");
         panelBotones.add(btnQuitar);
@@ -442,26 +431,27 @@ public class JDialogTienda extends javax.swing.JDialog {
         btnQuitar.addActionListener(e -> {
             int[] seleccionados = listaCarrito.getSelectedIndices();
             if (seleccionados.length == 0) {
-                JOptionPane.showMessageDialog(dialogCarrito, "Selecciona los productos que quieras quitar.");
+                JOptionPane.showMessageDialog(dialogCarrito, "Selecciona productos para quitar.");
                 return;
             }
-
-            List<String> keys = new ArrayList<>(carrito.keySet());
             for (int i = seleccionados.length - 1; i >= 0; i--) {
-                String key = keys.get(seleccionados[i]);
-                carrito.remove(key);
-                modeloLista.remove(seleccionados[i]);
+                String texto = modeloListaCarrito.get(seleccionados[i]);
+                String nombreReal = texto.split(" \\(")[0];
+                carrito.remove(nombreReal);
+                modeloListaCarrito.remove(seleccionados[i]);
             }
             actualizarLabels();
         });
 
-        // Modificar cantidades
         btnModificarValores.addActionListener(e -> {
-            int[] seleccionados = listaCarrito.getSelectedIndices();
-            if (seleccionados.length == 0) return;
+            int[] seleccion = listaCarrito.getSelectedIndices();
+            if (seleccion.length == 0) {
+                JOptionPane.showMessageDialog(dialogCarrito, "Selecciona los productos que quieras modificar.");
+                return;
+            }
 
             JDialog modificarDialog = new JDialog(dialogCarrito, "Modificar Cantidades", true);
-            modificarDialog.setSize(300, 100);
+            modificarDialog.setSize(320, 120);
             modificarDialog.setLocationRelativeTo(dialogCarrito);
             modificarDialog.setLayout(new FlowLayout());
 
@@ -474,43 +464,43 @@ public class JDialogTienda extends javax.swing.JDialog {
             modificarDialog.add(btnCerrar);
 
             btnSumar.addActionListener(ev -> {
-                List<String> keys = new ArrayList<>(carrito.keySet());
-                for (int i : seleccionados) {
-                    String key = keys.get(i);
-                    // Verificar stock antes de aumentar
-                    int cantidadActual = (Integer) carrito.get(key)[0];
-                    if (!hayStockDisponible(key, cantidadActual + 1)) {
-                        JOptionPane.showMessageDialog(modificarDialog, "No quedan unidades disponibles para " + key);
-                        continue;
-                    }
-                    carrito.get(key)[0] = cantidadActual + 1;
+                int[] selNow = listaCarrito.getSelectedIndices();
+                for (int idx : selNow) {
+                    if (idx < 0 || idx >= modeloListaCarrito.getSize()) continue;
+                    String texto = modeloListaCarrito.get(idx);
+                    String nombreReal = texto.split(" \\(")[0];
+                    if (!carrito.containsKey(nombreReal)) continue;
+                    int cantidadActual = (Integer) carrito.get(nombreReal)[0];
+                    if (!hayStockDisponible(nombreReal, cantidadActual + 1)) continue;
+                    carrito.get(nombreReal)[0] = cantidadActual + 1;
+                    modeloListaCarrito.set(idx, nombreReal + " (x" + (cantidadActual + 1) + ")");
                 }
-                modeloLista.clear();
-                carrito.forEach((k, v) -> {
-                    int cant = (Integer) v[0];
-                    double precio = (Double) v[1];
-                    modeloLista.addElement(cant > 1 ? k + " (x" + cant + ") - " + (cant*precio) + "€" : k + " - " + (cant*precio) + "€");
-                });
+                listaCarrito.setSelectedIndices(selNow);
                 actualizarLabels();
             });
 
             btnRestar.addActionListener(ev -> {
-                List<String> keys = new ArrayList<>(carrito.keySet());
-                for (int i : seleccionados) {
-                    String key = keys.get(i);
-                    int cantidadActual = (Integer) carrito.get(key)[0];
+                int[] selNow = listaCarrito.getSelectedIndices();
+                java.util.Arrays.sort(selNow);
+                for (int j = selNow.length - 1; j >= 0; j--) {
+                    int idx = selNow[j];
+                    if (idx < 0 || idx >= modeloListaCarrito.getSize()) continue;
+                    String texto = modeloListaCarrito.get(idx);
+                    String nombreReal = texto.split(" \\(")[0];
+                    if (!carrito.containsKey(nombreReal)) {
+                        modeloListaCarrito.remove(idx);
+                        continue;
+                    }
+                    int cantidadActual = (Integer) carrito.get(nombreReal)[0];
                     if (cantidadActual > 1) {
-                        carrito.get(key)[0] = cantidadActual - 1;
+                        carrito.get(nombreReal)[0] = cantidadActual - 1;
+                        modeloListaCarrito.set(idx, nombreReal + " (x" + (cantidadActual - 1) + ")");
                     } else {
-                        carrito.remove(key);
+                        carrito.remove(nombreReal);
+                        modeloListaCarrito.remove(idx);
                     }
                 }
-                modeloLista.clear();
-                carrito.forEach((k, v) -> {
-                    int cant = (Integer) v[0];
-                    double precio = (Double) v[1];
-                    modeloLista.addElement(cant > 1 ? k + " (x" + cant + ") - " + (cant*precio) + "€" : k + " - " + (cant*precio) + "€");
-                });
+                if (modeloListaCarrito.getSize() > 0) listaCarrito.setSelectedIndex(0);
                 actualizarLabels();
             });
 
@@ -522,6 +512,24 @@ public class JDialogTienda extends javax.swing.JDialog {
         dialogCarrito.setVisible(true);
     }//GEN-LAST:event_jButtonCarritoActionPerformed
 
+    private int indiceEnModeloPorNombre(String nombre) {
+        for (int i = 0; i < modeloListaCarrito.getSize(); i++) {
+            String texto = modeloListaCarrito.get(i);
+            String nombreModelo = texto.split(" \\(")[0];
+            if (nombreModelo.equals(nombre)) return i;
+        }
+        return -1;
+    }
+    
+    private void recargarListaCarrito() {
+        modeloListaCarrito.clear();
+        for (Map.Entry<String, Object[]> entry : carrito.entrySet()) {
+            String nombre = entry.getKey();
+            int cantidad = (Integer) entry.getValue()[0];
+            modeloListaCarrito.addElement(nombre + " (x" + cantidad + ")");
+        }
+    }
+    
     private void jToggleButtonPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonPagoActionPerformed
         if (carrito.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El carrito está vacío, añada más productos.");
