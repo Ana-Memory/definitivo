@@ -512,14 +512,6 @@ public class JDialogTienda extends javax.swing.JDialog {
         dialogCarrito.setVisible(true);
     }//GEN-LAST:event_jButtonCarritoActionPerformed
 
-    private int indiceEnModeloPorNombre(String nombre) {
-        for (int i = 0; i < modeloListaCarrito.getSize(); i++) {
-            String texto = modeloListaCarrito.get(i);
-            String nombreModelo = texto.split(" \\(")[0];
-            if (nombreModelo.equals(nombre)) return i;
-        }
-        return -1;
-    }
     
     private void recargarListaCarrito() {
         modeloListaCarrito.clear();

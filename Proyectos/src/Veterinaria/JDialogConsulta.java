@@ -197,6 +197,13 @@ public class JDialogConsulta extends javax.swing.JDialog {
     private void jButtonSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSiguienteActionPerformed
     Double precio = Double.parseDouble(jTextFieldPrecio.getText());
     String id_cliente = jTextFieldid_cliente.getText().trim(); // puede estar vacío
+    
+    if (jTextFieldid_mascota.getText().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Por favor inserte el id de la mascota", 
+            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
     int id_mascota = Integer.parseInt(jTextFieldid_mascota.getText());
     
     try (Connection con = Conexion.getConexion()) {
