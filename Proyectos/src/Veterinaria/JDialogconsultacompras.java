@@ -35,11 +35,11 @@ public class JDialogconsultacompras extends javax.swing.JDialog {
     ) {
         @Override
         public boolean isCellEditable(int row, int column) {
-            return false; // tabla solo lectura
+            return false;
         }
     };
 
-    String sql = "SELECT id, id_dueno, id_producto FROM compra";
+    String sql = "SELECT id, id_dueno, cantidad FROM compra";
 
     try (Connection con = Conexion.getConexion();
          Statement st = con.createStatement();
@@ -49,13 +49,13 @@ public class JDialogconsultacompras extends javax.swing.JDialog {
             Object[] fila = new Object[3];
             fila[0] = rs.getInt("id");
             fila[1] = rs.getString("id_dueno");
-            fila[2] = rs.getString("id_producto");
+            fila[2] = rs.getInt("cantidad") + " productos comprados.";
 
             modelo.addRow(fila);
         }
 
         jTablecompra.setModel(modelo);
-        jTablecompra.setDefaultEditor(Object.class, null); // desactiva edición
+        jTablecompra.setDefaultEditor(Object.class, null);
 
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Error al cargar compras: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
