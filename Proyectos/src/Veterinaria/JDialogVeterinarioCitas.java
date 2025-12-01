@@ -163,8 +163,15 @@ public class JDialogVeterinarioCitas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAtenderCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtenderCitaActionPerformed
+        int[] filas = jListCita.getSelectedIndices();
         int index = jListCita.getSelectedIndex();
         if (index == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No has seleccionado ninguna cita.");
+            return;
+        }
+        
+        if (filas.length > 1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No puedes atender más de una cita al mismo tiempo.");
             return;
         }
 
