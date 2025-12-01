@@ -12,40 +12,19 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
- * @author Administrador
+ * @author DAM2Alu2
  */
-public class JDialogEditaMascota extends javax.swing.JDialog {
-    private int idMascota;
-    /**
-     * Creates new form JDialogEditaMascota
-     */
-    public JDialogEditaMascota(java.awt.Dialog parent, boolean modal, int idMascota) {
-        super(parent, modal);
-        initComponents();
-        this.idMascota = idMascota;
-        
-        try (Connection con = Conexion.getConexion()) {
-            String sql = "SELECT nombre, especie, edad, sexo, peso, vacunas, historial FROM mascota WHERE id = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idMascota);
-            ResultSet rs = ps.executeQuery();
+public class JDialogAltaMascota extends javax.swing.JDialog {
+    private JDialogVeterinarioMascotas padre;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogAltaMascota.class.getName());
 
-            if (rs.next()) {
-                jTextField1.setText(rs.getString("nombre"));
-                jTextField2.setText(rs.getString("especie"));
-                jTextField3.setText(rs.getString("edad"));
-                jTextField4.setText(rs.getString("sexo"));
-                jTextField5.setText(String.valueOf(rs.getDouble("peso")));
-                jTextField6.setText(rs.getBoolean("vacunas") ? "true" : "false");
-                jTextField7.setText(rs.getString("historial"));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Error al cargar datos de la mascota: " + ex.getMessage(),
-                "Error BD",
-                javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+    /**
+     * Creates new form JDialogAltaMascota
+     */
+    public JDialogAltaMascota(JDialogVeterinarioMascotas parent, boolean modal) {
+        super(parent, modal);
+        this.padre = parent;
+        initComponents();
     }
 
     /**
@@ -72,6 +51,8 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         jTextField6 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField8 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -80,7 +61,7 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(7, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(8, 2));
 
         jLabel1.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(52, 164, 175));
@@ -145,6 +126,15 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         jTextField7.setForeground(new java.awt.Color(105, 211, 183));
         jPanel1.add(jTextField7);
 
+        jLabel10.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(52, 164, 175));
+        jLabel10.setText("DNI del dueño");
+        jPanel1.add(jLabel10);
+
+        jTextField8.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jTextField8.setForeground(new java.awt.Color(105, 211, 183));
+        jPanel1.add(jTextField8);
+
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
         jPanel2.add(jLabel8);
@@ -172,18 +162,20 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(302, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 43, Short.MAX_VALUE)))
         );
 
         pack();
@@ -191,7 +183,8 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try (Connection con = Conexion.getConexion()) {
-            String sql = "UPDATE mascota SET nombre=?, especie=?, edad=?, sexo=?, peso=?, vacunas=?, historial=? WHERE id=?";
+            String sql = "INSERT INTO mascota (nombre, especie, edad, sexo, peso, vacunas, historial, id_dueno) "
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, jTextField1.getText());
@@ -201,19 +194,36 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
             ps.setDouble(5, Double.parseDouble(jTextField5.getText()));
             ps.setBoolean(6, Boolean.parseBoolean(jTextField6.getText()));
             ps.setString(7, jTextField7.getText());
-            ps.setInt(8, idMascota);
+
+            // id_dueno puede ser null
+            if (jTextField8.getText().trim().isEmpty()) {
+                ps.setString(8, null);
+            } else {
+                ps.setString(8, jTextField8.getText());
+            }
 
             ps.executeUpdate();
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Cambios guardados.");
+            JOptionPane.showMessageDialog(this, "Mascota añadida correctamente.");
+            if (padre != null) {
+                padre.cargarTablaMascotas();
+            }
             this.dispose();
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Error al modificar mascota: " + ex.getMessage(),
-                "Error BD",
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+            // Captura violación de FK
+            if (ex.getMessage().toLowerCase().contains("foreign key")) {
+                JOptionPane.showMessageDialog(this,
+                    "Error: el DNI del dueño no existe.",
+                    "Error FK",
+                    JOptionPane.ERROR_MESSAGE);
+            } else {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this,
+                    "Error al añadir mascota: " + ex.getMessage(),
+                    "Error BD",
+                    JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -224,49 +234,13 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDialogEditaMascota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDialogEditaMascota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDialogEditaMascota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogEditaMascota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JDialogEditaMascota dialog = new JDialogEditaMascota(new javax.swing.JDialog(), true, 0);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -284,5 +258,6 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 }

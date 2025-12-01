@@ -92,9 +92,9 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         logo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jButtonAltaMascota = new javax.swing.JButton();
         jButtonEditarMascota = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        jButtonBajaMascota = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMascotas = new javax.swing.JTable();
@@ -108,10 +108,19 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
         jPanel2.add(jLabel1);
-        jPanel2.add(jLabel3);
+
+        jButtonAltaMascota.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jButtonAltaMascota.setForeground(new java.awt.Color(105, 211, 183));
+        jButtonAltaMascota.setText("Dar de alta");
+        jButtonAltaMascota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAltaMascotaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonAltaMascota);
 
         jButtonEditarMascota.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        jButtonEditarMascota.setForeground(new java.awt.Color(255, 153, 0));
+        jButtonEditarMascota.setForeground(new java.awt.Color(52, 164, 175));
         jButtonEditarMascota.setText("Editar mascota");
         jButtonEditarMascota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,7 +128,16 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
             }
         });
         jPanel2.add(jButtonEditarMascota);
-        jPanel2.add(jLabel4);
+
+        jButtonBajaMascota.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jButtonBajaMascota.setForeground(new java.awt.Color(255, 153, 0));
+        jButtonBajaMascota.setText("Dar de baja");
+        jButtonBajaMascota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBajaMascotaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonBajaMascota);
         jPanel2.add(jLabel2);
 
         jTableMascotas.setForeground(new java.awt.Color(52, 164, 175));
@@ -177,20 +195,81 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEditarMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarMascotaActionPerformed
-       int fila = jTableMascotas.getSelectedRow();
-        if (fila == -1) {
+       int[] filas = jTableMascotas.getSelectedRows();
+        if (filas.length == 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Selecciona una mascota.");
             return;
         }
+        
+        if (filas.length > 1){
+            javax.swing.JOptionPane.showMessageDialog(this, "No puedes editar más de una mascota al mismo tiempo.");
+            return;
+        }
 
-        int modelRow = jTableMascotas.convertRowIndexToModel(fila);
+        int modelRow = jTableMascotas.convertRowIndexToModel(filas[0]);
         int id = (Integer) modelo.getValueAt(modelRow, 0);
 
-        JDialogEditaMascota dlg = new JDialogEditaMascota(JDialogVeterinarioMascotas.this, true, id);
+        JDialogEditaMascota dlg = new JDialogEditaMascota(this, true, id);
         dlg.setVisible(true);
-
         cargarTablaMascotas();
     }//GEN-LAST:event_jButtonEditarMascotaActionPerformed
+
+    private void jButtonAltaMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaMascotaActionPerformed
+        JDialogAltaMascota am = new JDialogAltaMascota(this, true);
+        am.setVisible(true);
+    }//GEN-LAST:event_jButtonAltaMascotaActionPerformed
+
+    private void jButtonBajaMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBajaMascotaActionPerformed
+        int[] filas = jTableMascotas.getSelectedRows();
+        if (filas.length == 0) {
+            JOptionPane.showMessageDialog(this, "Selecciona al menos una mascota.");
+            return;
+        }
+        
+        String mensaje, mensaje2;
+        if (filas.length == 1) {
+            mensaje = "¿Seguro que quieres dar de baja esta mascota?";
+            mensaje2 = "Mascota dada de alta correctamente";
+        } else {
+            mensaje = "¿Seguro que quieres dar de baja a estas " + filas.length + " mascotas?";
+            mensaje2 = "Mascotas dadas de alta correctamente";
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            mensaje,
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try (Connection con = Conexion.getConexion()) {
+            String sql = "DELETE FROM mascota WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            for (int fila : filas) {
+                int modelRow = jTableMascotas.convertRowIndexToModel(fila);
+                int id = (Integer) modelo.getValueAt(modelRow, 0);
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
+
+            JOptionPane.showMessageDialog(this, mensaje2);
+            cargarTablaMascotas();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(
+                this,
+                "Error al eliminar mascota(s): " + ex.getMessage(),
+                "Error BD",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_jButtonBajaMascotaActionPerformed
     private void ajustarImagenLogo() {
     // Cargar la imagen original desde los recursos
         javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
@@ -211,7 +290,7 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         logo.setIcon(iconoEscalado);
     }
     
-    private void cargarTablaMascotas() {
+    public void cargarTablaMascotas() {
         modelo.setRowCount(0);
 
         try (Connection con = Conexion.getConexion()) {
@@ -294,11 +373,11 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAltaMascota;
+    private javax.swing.JButton jButtonBajaMascota;
     private javax.swing.JButton jButtonEditarMascota;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
