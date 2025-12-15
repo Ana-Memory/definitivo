@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -65,10 +67,15 @@ public class JDialogTienda extends javax.swing.JDialog {
             dtm.addRow(fila);
         }
         
+        DefaultTableCellRenderer align = new DefaultTableCellRenderer();
+        align.setHorizontalAlignment(SwingConstants.RIGHT);
+        
         jTableProductos.getColumnModel().getColumn(0).setPreferredWidth(160);
         jTableProductos.getColumnModel().getColumn(1).setPreferredWidth(290);
         jTableProductos.getColumnModel().getColumn(2).setPreferredWidth(50);
         jTableProductos.getColumnModel().getColumn(3).setPreferredWidth(40);
+        jTableProductos.getColumnModel().getColumn(3).setCellRenderer(align);
+        
       
         jTableProductos.getTableHeader().setForeground(new Color(255, 153, 0));
         jTableProductos.getTableHeader().setFont(new Font("Candara", Font.BOLD, 14));

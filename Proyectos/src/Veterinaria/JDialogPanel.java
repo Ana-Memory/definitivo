@@ -9,6 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.DriverManager;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author DAM2Alu2
@@ -63,6 +69,9 @@ public class JDialogPanel extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        logo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jPanelAdministrador = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabelAdmins = new javax.swing.JLabel();
@@ -71,12 +80,20 @@ public class JDialogPanel extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabelVets = new javax.swing.JLabel();
         jButtonVeterinarios = new javax.swing.JButton();
-        logo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabelInformes = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(133, 210, 204));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Bienvenid@ a la sección para empleados.");
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0, 70, 0));
 
         jPanelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
         jPanelAdministrador.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(105, 211, 183), 5));
@@ -99,6 +116,8 @@ public class JDialogPanel extends javax.swing.JDialog {
             }
         });
         jPanelAdministrador.add(jButtonAdministradores);
+
+        jPanel2.add(jPanelAdministrador);
 
         jPanelVeterinario.setBackground(new java.awt.Color(255, 255, 255));
         jPanelVeterinario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(105, 211, 183), 5));
@@ -123,26 +142,41 @@ public class JDialogPanel extends javax.swing.JDialog {
         });
         jPanelVeterinario.add(jButtonVeterinarios);
 
-        jLabel1.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(133, 210, 204));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bienvenid@ a la sección para empleados.");
+        jPanel2.add(jPanelVeterinario);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new java.awt.GridLayout());
+
+        jLabelInformes.setBackground(new java.awt.Color(255, 153, 0));
+        jLabelInformes.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabelInformes.setForeground(new java.awt.Color(255, 153, 0));
+        jLabelInformes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelInformes.setText("VER INFORMES");
+        jLabelInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelInformesMouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabelInformes);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(jPanelAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -155,11 +189,11 @@ public class JDialogPanel extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanelVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,6 +221,12 @@ public class JDialogPanel extends javax.swing.JDialog {
         ad.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonAdministradoresActionPerformed
+
+    private void jLabelInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelInformesMouseClicked
+        JDialogpanelInformes i = new JDialogpanelInformes(JDialogPanel.this, true);
+        i.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabelInformesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -292,8 +332,11 @@ public class JDialogPanel extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelAdmins;
+    private javax.swing.JLabel jLabelInformes;
     private javax.swing.JLabel jLabelVets;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelAdministrador;
     private javax.swing.JPanel jPanelVeterinario;
     private javax.swing.JLabel logo;
