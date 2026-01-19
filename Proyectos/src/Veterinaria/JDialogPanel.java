@@ -223,9 +223,7 @@ public class JDialogPanel extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonAdministradoresActionPerformed
 
     private void jLabelInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelInformesMouseClicked
-        JDialogpanelInformes i = new JDialogpanelInformes(JDialogPanel.this, true);
-        i.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jLabelInformesMouseClicked
 
     /**

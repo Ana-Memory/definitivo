@@ -50,8 +50,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         jButtoninsertarmas = new javax.swing.JButton();
         jButtonconmascotas = new javax.swing.JButton();
         jButtonconsultacompras = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jComboBoxUsuarios = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -120,15 +118,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jComboBoxUsuarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Veterinario", "Administrador" }));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -152,11 +141,7 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonborrarvet)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(31, 31, 31)
-                        .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,10 +154,7 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
                 .addGap(36, 36, 36)
                 .addComponent(jButtoninsertarvet)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonborrarvet)
-                    .addComponent(jButton1)
-                    .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonborrarvet)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtoninsertarproductos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -235,43 +217,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         jp.setVisible(true);
     }//GEN-LAST:event_jButtonconsultacomprasActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            //Ruta del informe
-            String fileJasper = "informes/veterinariaUsuarios.jasper";
-            
-            //Parametros: En usuarios se necesita ROL(Cliente/Veterinario/Administrador), en productos CANTIDAD(Precio minimo por el que buscar, int), en consultas FECHA (Una fecha)
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("ROL", jComboBoxUsuarios.getSelectedItem().toString());
-
-            //Conectarse
-            JasperPrint print = JasperFillManager.fillReport(fileJasper, parameters, Conexion.getConexion());
-            
-            //Esto solo para el rol, hace que el nombre de los informes esté en plural
-            String rol="";
-            if (jComboBoxUsuarios.getSelectedItem().toString().equals("Administrador")) {
-                rol="Administradores";
-            } else if (jComboBoxUsuarios.getSelectedItem().toString().equals("Veterinario")) {
-                rol="Veterinarios";
-            } else {
-                rol="Clientes";
-            }
-            
-            //Nombre del informe y exportar a pdf
-            String outputFile = "informes/informe" + rol + ".pdf";
-            JasperExportManager.exportReportToPdfFile(print, outputFile);
-
-            //Mensaje si sale bien, y si se puede abrir el informe automáticamente.
-            JOptionPane.showMessageDialog(this,"Informe generado correctamente:\n" + outputFile, "PDF generado", JOptionPane.INFORMATION_MESSAGE);
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(new File(outputFile));
-            }
-        } catch (Exception ex) { //Por si hay algún error
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -310,7 +255,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonborrarvet;
     private javax.swing.JButton jButtonconmascotas;
     private javax.swing.JButton jButtonconsultacompras;
@@ -318,7 +262,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
     private javax.swing.JButton jButtoninsertarproductos;
     private javax.swing.JButton jButtoninsertarvet;
     private javax.swing.JButton jButtonusuarios;
-    private javax.swing.JComboBox<String> jComboBoxUsuarios;
     private javax.swing.JLabel jLabelBienvenida;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel logo;
