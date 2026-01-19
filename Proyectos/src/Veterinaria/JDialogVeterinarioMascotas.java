@@ -24,6 +24,7 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         ajustarImagenLogo();
+        ajustarImagenPdf();
         
         modelo = new DefaultTableModel(
             null,
@@ -98,7 +99,7 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMascotas = new javax.swing.JTable();
-        pdf = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -155,8 +156,8 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(jTableMascotas);
 
-        pdf.setForeground(new java.awt.Color(0, 0, 0));
-        pdf.setPreferredSize(new java.awt.Dimension(37, 37));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logopdf.png"))); // NOI18N
+        jLabel3.setPreferredSize(new java.awt.Dimension(86, 83));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,7 +170,8 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -182,9 +184,9 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                        .addContainerGap(12, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,6 +303,16 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         logo.setIcon(iconoEscalado);
     }
     
+    private void ajustarImagenPdf(){
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(getClass().getResource("/recursos/logopdf.png"));
+        
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+        
+        jLabel3.setIcon(iconoEscalado);
+    }
+    
     public void cargarTablaMascotas() {
         modelo.setRowCount(0);
 
@@ -340,26 +352,6 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
                 javax.swing.JOptionPane.ERROR_MESSAGE
             );
         }
-    }
-    
-    private void ajustarImagenPdf() {
-    // Cargar la imagen original desde los recursos
-        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
-            getClass().getResource("/recursos/logopdf.png")
-        );
-
-        // Escalar la imagen al tamaño del JLabel
-        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
-            pdf.getWidth(),
-            pdf.getHeight(),
-            java.awt.Image.SCALE_SMOOTH
-        );
-
-        // Crear un nuevo icono con la imagen escalada
-        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
-
-        // Asignarlo al JLabel
-        pdf.setIcon(iconoEscalado);
     }
     /**
      * @param args the command line arguments
@@ -409,11 +401,11 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
     private javax.swing.JButton jButtonEditarMascota;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMascotas;
     private javax.swing.JLabel logo;
-    private javax.swing.JLabel pdf;
     // End of variables declaration//GEN-END:variables
 }
