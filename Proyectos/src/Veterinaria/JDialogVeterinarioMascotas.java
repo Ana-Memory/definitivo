@@ -4,13 +4,22 @@
  */
 package Veterinaria;
 import Veterinaria.Conexion;
+import java.awt.Desktop;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.DriverManager;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 /**
  *
  * @author Administrador
@@ -28,7 +37,7 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         
         modelo = new DefaultTableModel(
             null,
-            new String[]{"ID", "Nombre", "Especie", "Edad", "Sexo", "Peso", "Vacunas", "Historial", "Dueño"}
+            new String[]{"ID", "Nombre", "Especie", "Edad", "Sexo", "Peso (Kg)", "Vacunas", "Historial", "Info del Dueño"}
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -41,12 +50,37 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
                 return String.class;
             }
         };
+        DefaultTableCellRenderer allignDerecha = new DefaultTableCellRenderer();
+        allignDerecha.setHorizontalAlignment(SwingConstants.RIGHT);
+        
+        DefaultTableCellRenderer allignIzquierda = new DefaultTableCellRenderer();
+        allignIzquierda.setHorizontalAlignment(SwingConstants.LEFT);
+
         jTableMascotas.setModel(modelo);
+        jTableMascotas.getColumnModel().getColumn(0).setPreferredWidth(10);
+        jTableMascotas.getColumnModel().getColumn(0).setCellRenderer(allignIzquierda);
+        jTableMascotas.getColumnModel().getColumn(1).setPreferredWidth(60);
+        jTableMascotas.getColumnModel().getColumn(1).setCellRenderer(allignIzquierda);
+        jTableMascotas.getColumnModel().getColumn(2).setPreferredWidth(165);
+        jTableMascotas.getColumnModel().getColumn(2).setCellRenderer(allignIzquierda);
+        jTableMascotas.getColumnModel().getColumn(3).setPreferredWidth(50);
+        jTableMascotas.getColumnModel().getColumn(3).setCellRenderer(allignIzquierda);
+        jTableMascotas.getColumnModel().getColumn(4).setPreferredWidth(40);
+        jTableMascotas.getColumnModel().getColumn(4).setCellRenderer(allignIzquierda);
+        jTableMascotas.getColumnModel().getColumn(5).setPreferredWidth(50);
+        jTableMascotas.getColumnModel().getColumn(5).setCellRenderer(allignDerecha);
+        jTableMascotas.getColumnModel().getColumn(6).setPreferredWidth(50);
+        jTableMascotas.getColumnModel().getColumn(6).setCellRenderer(allignIzquierda);
+        jTableMascotas.getColumnModel().getColumn(7).setPreferredWidth(90);
+        jTableMascotas.getColumnModel().getColumn(7).setCellRenderer(allignIzquierda);
+        jTableMascotas.getColumnModel().getColumn(8).setPreferredWidth(135);
+        jTableMascotas.getColumnModel().getColumn(8).setCellRenderer(allignIzquierda);        
 
         try (Connection con = Conexion.getConexion()) {
             String sql = "SELECT id, nombre, especie, edad, sexo, peso, vacunas, historial, id_dueno FROM mascota";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+            
 
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -58,17 +92,20 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
                 boolean vacunas = rs.getBoolean("vacunas");
                 String vacunasT = vacunas ? "Sí" : "No";
                 String historial = rs.getString("historial");
-                String idDueno = rs.getString("id_dueno");
-
-                if (idDueno == null || idDueno.isEmpty()) {
-                    idDueno = "La mascota no tiene dueño";
+                String infoDueno = "No tiene dueño";
+                
+                String sql2 = "SELECT nombre, apellidos FROM usuario WHERE id =?";
+                PreparedStatement ps2 = con.prepareStatement(sql2);
+                ps2.setString(1, rs.getString("id_dueno"));
+                ResultSet rs2 = ps2.executeQuery();
+                if (rs2.next()) {
+                    infoDueno = rs2.getString("nombre") + " " + rs2.getString("apellidos");
                 }
-
                 modelo.addRow(new Object[]{
-                    id, nombre, especie, edad, sexo, peso, vacunasT, historial, idDueno
+                    id, nombre, especie, edad, sexo, peso, vacunasT, historial, infoDueno
                 });
+                
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(
@@ -102,6 +139,8 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(847, 320));
+        setSize(new java.awt.Dimension(847, 275));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -158,6 +197,11 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logopdf.png"))); // NOI18N
         jLabel3.setPreferredSize(new java.awt.Dimension(86, 83));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -170,27 +214,22 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(12, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -201,7 +240,7 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -283,6 +322,37 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
             );
         }
     }//GEN-LAST:event_jButtonBajaMascotaActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres descargar este pdf?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        
+        if (respuesta == JOptionPane.YES_OPTION) {
+            try {
+                //Ruta del informe
+                String fileJasper = "informes/veterinariaMascotas.jasper";
+
+                //Parametros: En usuarios se necesita ROL(Cliente/Veterinario/Administrador), en productos CANTIDAD(Precio minimo por el que buscar, int), en consultas FECHA (Una fecha)
+                Map<String, Object> parameters = new HashMap<>();
+
+                //Conectarse
+                JasperPrint print = JasperFillManager.fillReport(fileJasper, parameters, Conexion.getConexion());
+
+
+                //Nombre del informe y exportar a pdf
+                String outputFile = "informes/informeMascotas.pdf";
+                JasperExportManager.exportReportToPdfFile(print, outputFile);
+
+                //Mensaje si sale bien, y si se puede abrir el informe automáticamente.
+                JOptionPane.showMessageDialog(this,"Informe generado correctamente:\n \"informeMascotas.pdf\" se abrirá automáticamente", "PDF generado", JOptionPane.INFORMATION_MESSAGE);
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(new File(outputFile));
+                }
+            } catch (Exception ex) { //Por si hay algún error
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al generar el informe: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jLabel3MouseClicked
     private void ajustarImagenLogo() {
     // Cargar la imagen original desde los recursos
         javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
@@ -320,6 +390,7 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
             String sql = "SELECT id, nombre, especie, edad, sexo, peso, vacunas, historial, id_dueno FROM mascota";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+            
 
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -329,20 +400,26 @@ public class JDialogVeterinarioMascotas extends javax.swing.JDialog {
                 String sexo = rs.getString("sexo");
                 double peso = rs.getDouble("peso");
                 boolean vacunas = rs.getBoolean("vacunas");
+                String vacunasT = vacunas ? "Sí" : "No";
                 String historial = rs.getString("historial");
-                String idDueno = rs.getString("id_dueno");
-
-                if (idDueno == null || idDueno.isEmpty()) {
-                    idDueno = "La mascota no tiene dueño";
+                String infoDueno = "DNI: " + rs.getString("id_dueno");
+                
+                String sql2 = "SELECT nombre, apellidos FROM usuario WHERE id =?";
+                PreparedStatement ps2 = con.prepareStatement(sql2);
+                ps2.setString(1, rs.getString("id_dueno"));
+                ResultSet rs2 = ps2.executeQuery();
+                if (rs2.next()) {
+                    infoDueno = infoDueno + ". Nombre: " + rs2.getString("nombre") + " " + rs2.getString("apellidos");
                 }
 
-                String vacunasTexto = vacunas ? "Sí" : "No";
-
+                if (infoDueno == null || infoDueno.isEmpty()) {
+                    infoDueno = "La mascota no tiene dueño";
+                } 
                 modelo.addRow(new Object[]{
-                    id, nombre, especie, edad, sexo, peso, vacunasTexto, historial, idDueno
+                    id, nombre, especie, edad, sexo, peso, vacunasT, historial, infoDueno
                 });
+                
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(
