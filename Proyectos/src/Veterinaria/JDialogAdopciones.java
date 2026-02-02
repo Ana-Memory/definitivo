@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,77 +63,117 @@ public class JDialogAdopciones extends javax.swing.JDialog {
                 m[5] = rs.getBoolean("vacunas");
                 lista.add(m);
             }
+            
+            if (lista.isEmpty()) {
+                jPanelMascotas.setLayout(new BorderLayout()); // Para centrar el mensaje
+                JLabel mensajeArriba = new JLabel("NO HAY MASCOTAS");
+                mensajeArriba.setFont(new Font("Candara", Font.BOLD, 50));
+                mensajeArriba.setForeground(new Color(255, 153, 0));
+                mensajeArriba.setHorizontalAlignment(JLabel.CENTER);
+                mensajeArriba.setVerticalAlignment(JLabel.BOTTOM);
+                mensajeArriba.setBorder(new EmptyBorder(30, 0, 0, 0));
+                
+                JLabel mensajeCentro = new JLabel("<html><div style='text-align:center;'>"
+                                                + "Le agradecemos su interés por adoptar a una mascota,<br>"
+                                                + "pero todos los animales del refugio fueron adoptados<br>"
+                                                + "y tienen hogares permanentes."
+                                                + "</div></html>"
+                                                );
+                mensajeCentro.setFont(new Font("Candara", Font.BOLD, 30));
+                mensajeCentro.setForeground(new Color(52, 164, 175));
+                mensajeCentro.setHorizontalAlignment(JLabel.CENTER);
+                mensajeCentro.setVerticalAlignment(JLabel.CENTER);
+                
+                JLabel mensajeAbajo = new JLabel("Por favor, vuelva otro día.");
+                mensajeAbajo.setFont(new Font("Candara", Font.BOLD, 20));
+                mensajeAbajo.setForeground(new Color(133, 210, 204));
+                mensajeAbajo.setHorizontalAlignment(JLabel.CENTER);
+                mensajeAbajo.setVerticalAlignment(JLabel.CENTER);
+                
+                jPanelMascotas.add(mensajeArriba, BorderLayout.NORTH);
+                jPanelMascotas.add(mensajeCentro, BorderLayout.CENTER);
+                jPanelMascotas.add(mensajeAbajo, BorderLayout.SOUTH);
+                jPanelMascotas.revalidate();
+                jPanelMascotas.repaint();
+            } else {
+                for (Object[] datosMascotaActual : lista) {
+                    JPanel jPanelMascota = new JPanel(new BorderLayout());
+                    jPanelMascota.setBackground(Color.white);
+                    jPanelMascota.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-            for (Object[] datosMascotaActual : lista) {
-                JPanel jPanelMascota = new JPanel(new BorderLayout());
-                jPanelMascota.setBackground(Color.white);
-                jPanelMascota.setBorder(new EmptyBorder(10, 10, 10, 10));
+                    // Imagen
+                    String nombre = datosMascotaActual[0].toString().toLowerCase();
+                    String ruta = "/recursos/" + nombre + ".jpg";
 
-                // Imagen
-                String ruta = "/recursos/default.jpg";
-                switch (datosMascotaActual[0].toString()) {
-                    case "Dante": ruta = "/recursos/dante.jpg"; break;
-                    case "Pretzel": ruta = "/recursos/pretzel.jpg"; break;
-                    case "Sheldon": ruta = "/recursos/sheldon.jpg"; break;
-                    case "Blue": ruta = "/recursos/blue.jpg"; break;
-                    case "Hamtaro": ruta = "/recursos/hamtaro.jpg"; break;
-                    default: ruta = "/recursos/default.jpg"; break;
+                    java.net.URL url = getClass().getResource(ruta);
+                    if (url == null) {
+                        url = getClass().getResource("/recursos/default.jpg");
+                    }
+
+                    ImageIcon icono = new ImageIcon(url);
+                    Image img = icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                    JLabel lblImagen = new JLabel(new ImageIcon(img));
+                    lblImagen.setBorder(new EmptyBorder(0,0,0,10));
+                    jPanelMascota.add(lblImagen, BorderLayout.WEST);
+
+                    // Texto
+                    JPanel panelTexto = new JPanel();
+                    panelTexto.setBackground(Color.white);
+                    panelTexto.setLayout(new BoxLayout(panelTexto, BoxLayout.Y_AXIS));
+                    panelTexto.setBorder(new EmptyBorder(10,0,0,0));
+
+                    if (lista.size() == 1) {
+                        jPanelMascota.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+                        jPanelMascota.setAlignmentY(JPanel.CENTER_ALIGNMENT);
+                        jPanelMascota.setMaximumSize(
+                            new java.awt.Dimension(Integer.MAX_VALUE, 200)
+                        );
+                        panelTexto.setBorder(new EmptyBorder(0,0,0,0));
+                    }
+
+                    Font fuente = new Font("Candara", Font.ITALIC, 14);
+                    Color color = new Color(52,164,175);
+                    Font fuenteBoton = new Font("Candara", Font.BOLD, 14);
+                    Color colorBoton = new Color(255,153,0);
+
+                    panelTexto.add(new JLabel("Nombre: " + datosMascotaActual[0] + "."));
+                    panelTexto.add(new JLabel("Especie: " + datosMascotaActual[1] + "."));
+                    panelTexto.add(new JLabel("Edad: " + datosMascotaActual[2] + "."));
+                    panelTexto.add(new JLabel("Sexo: " + datosMascotaActual[3] + "."));
+                    panelTexto.add(new JLabel("Peso: " + datosMascotaActual[4] + "."));
+
+                    boolean vacunado = (boolean) datosMascotaActual[5];
+                    panelTexto.add(new JLabel(vacunado ? "Tiene todas sus vacunas" : "No está vacunado"));
+
+                    // Descripción
+                    String descripcion = switch (datosMascotaActual[0].toString()) {
+                        case "Dante" -> "Nuestro querido Dante es un perro enérgico y muy amistoso. Perfecto para acompañarte en tus caminatas mañaneras.";
+                        case "Pretzel" -> "Pretzel es una gatita que requiere mucha atención, pero es muy cariñosa y mansa.";
+                        case "Sheldon" -> "Sheldon es perfecto para los amantes de los reptiles y los que prefieren mascotas tranquilas.";
+                        case "Blue" -> "Si quieres una mascota cariñosa, inteligente y sociable, ¡Blue es para ti!";
+                        case "Hamtaro" -> "Nuestro pequeño Hamtaro es tierno, tímido y tranquilo.";
+                        default -> datosMascotaActual[0] + " ha llegado recientemente al refugio. ¡Dale una oportunidad!";
+                    };
+                    JLabel des = new JLabel(descripcion);
+                    des.setFont(fuente);
+                    des.setForeground(color);
+                    panelTexto.add(des);
+
+                    // Botón adopción
+                    JButton jButtonAdopta = new JButton("ADOPTA YA");
+                    jButtonAdopta.setFont(fuenteBoton);
+                    jButtonAdopta.setForeground(colorBoton);
+                    panelTexto.add(jButtonAdopta);
+
+                    jButtonAdopta.addActionListener(e -> jButtonAdoptaActionPerformed(datosMascotaActual));
+
+                    jPanelMascota.add(panelTexto, BorderLayout.CENTER);
+                    jPanelMascotas.add(jPanelMascota);
                 }
-                ImageIcon icono = new ImageIcon(getClass().getResource(ruta));
-                Image img = icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                JLabel lblImagen = new JLabel(new ImageIcon(img));
-                lblImagen.setBorder(new EmptyBorder(0,0,0,10));
-                jPanelMascota.add(lblImagen, BorderLayout.WEST);
 
-                // Texto
-                JPanel panelTexto = new JPanel();
-                panelTexto.setBackground(Color.white);
-                panelTexto.setLayout(new BoxLayout(panelTexto, BoxLayout.Y_AXIS));
-                panelTexto.setBorder(new EmptyBorder(10,0,0,0));
-
-                Font fuente = new Font("Candara", Font.ITALIC, 14);
-                Color color = new Color(52,164,175);
-                Font fuenteBoton = new Font("Candara", Font.BOLD, 14);
-                Color colorBoton = new Color(255,153,0);
-
-                panelTexto.add(new JLabel("")); // espacio
-                panelTexto.add(new JLabel("Nombre: " + datosMascotaActual[0] + "."));
-                panelTexto.add(new JLabel("Especie: " + datosMascotaActual[1] + "."));
-                panelTexto.add(new JLabel("Edad: " + datosMascotaActual[2] + "."));
-                panelTexto.add(new JLabel("Sexo: " + datosMascotaActual[3] + "."));
-                panelTexto.add(new JLabel("Peso: " + datosMascotaActual[4] + "."));
-
-                boolean vacunado = (boolean) datosMascotaActual[5];
-                panelTexto.add(new JLabel(vacunado ? "Tiene todas sus vacunas" : "No está vacunado"));
-
-                // Descripción
-                String descripcion = switch (datosMascotaActual[0].toString()) {
-                    case "Dante" -> "Nuestro querido Dante es un perro enérgico y muy amistoso. Perfecto para acompañarte en tus caminatas mañaneras.";
-                    case "Pretzel" -> "Pretzel es una gatita que requiere mucha atención, pero es muy cariñosa y mansa.";
-                    case "Sheldon" -> "Sheldon es perfecto para los amantes de los reptiles y los que prefieren mascotas tranquilas.";
-                    case "Blue" -> "Si quieres una mascota cariñosa, inteligente y sociable, ¡Blue es para ti!";
-                    case "Hamtaro" -> "Nuestro pequeño Hamtaro es tierno, tímido y tranquilo.";
-                    default -> datosMascotaActual[0] + " ha llegado recientemente al refugio. ¡Dale una oportunidad!";
-                };
-                JLabel des = new JLabel(descripcion);
-                des.setFont(fuente);
-                des.setForeground(color);
-                panelTexto.add(des);
-
-                // Botón adopción
-                JButton jButtonAdopta = new JButton("ADOPTA YA");
-                jButtonAdopta.setFont(fuenteBoton);
-                jButtonAdopta.setForeground(colorBoton);
-                panelTexto.add(jButtonAdopta);
-
-                jButtonAdopta.addActionListener(e -> jButtonAdoptaActionPerformed(datosMascotaActual));
-
-                jPanelMascota.add(panelTexto, BorderLayout.CENTER);
-                jPanelMascotas.add(jPanelMascota);
+                jPanelMascotas.revalidate();
+                jPanelMascotas.repaint();
             }
-
-            jPanelMascotas.revalidate();
-            jPanelMascotas.repaint();
         } catch (SQLException e) {
             e.printStackTrace();
         }
