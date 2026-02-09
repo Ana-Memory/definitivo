@@ -93,7 +93,8 @@ VALUES ("Dante", "Perro Labrador", "2 años", "Macho", 40.0, true, "Ojo vago.", 
        ("Pretzel", "Gato Cálico", "3 meses", "Hembra", 1.5, true, "", NULL),
        ("Sheldon", "Tortuga de caparazón blando", "50 años", "Macho", 0.2, false, "Desparasitación.", NULL),
        ("Blue", "Cacatúa", "5 años", "Hembra", 1.2, false, "", NULL),
-       ("Hamtaro", "Hamster", "1 año", "Macho", 0.02, false, "Revisión.", NULL);
+       ("Hamtaro", "Hamster", "1 año", "Macho", 0.02, false, "Revisión.", NULL),
+       ("Paquita", "Boa de arena ", "3 años", "Hembra", 0.100, false, "", NULL);
 
 -- INSERCIÓN DE USUARIOS ADMINISTRADORES --
 INSERT INTO usuario (id, nombre, apellidos, telefono, correo, usuario, rol)

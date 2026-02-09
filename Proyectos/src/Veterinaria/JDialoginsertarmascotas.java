@@ -216,18 +216,28 @@ public class JDialoginsertarmascotas extends javax.swing.JDialog {
         String tipo = (String) jComboBoxTipo.getSelectedItem();
     }//GEN-LAST:event_jComboBoxTipoActionPerformed
     
-    private void jButtonsubirimagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsubirimagenActionPerformed
-   JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes", "png", "jpg", "jpeg"));
-    int result = fileChooser.showOpenDialog(this);
+    private void guardarImagenEnCarpeta(File imagenOriginal) {
+    try {
+        String rutaProyecto = new File("").getAbsolutePath();
+        
+        File carpeta = new File(rutaProyecto + "/recursos/");
 
-    if (result == JFileChooser.APPROVE_OPTION) {
-        imagenSeleccionada = fileChooser.getSelectedFile();
-        // Usa un JLabel dedicado, por ejemplo jLabelFoto
-        jLabel12.setIcon(new ImageIcon(imagenSeleccionada.getAbsolutePath())); 
+        File destino = new File(carpeta, imagenOriginal.getName());
+
+        java.nio.file.Files.copy(
+            imagenOriginal.toPath(),
+            destino.toPath(),
+            java.nio.file.StandardCopyOption.REPLACE_EXISTING
+        );
+
+        System.out.println("Imagen guardada en: " + destino.getAbsolutePath());
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al guardar la imagen: " + e.getMessage());
     }
-    }//GEN-LAST:event_jButtonsubirimagenActionPerformed
-
+}
+  
     private void jButtonsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsiguienteActionPerformed
   String nombre = jTextFieldnombre.getText();
   String especie= jTextFieldespecie.getText();
@@ -253,11 +263,30 @@ public class JDialoginsertarmascotas extends javax.swing.JDialog {
     }
     }//GEN-LAST:event_jButtonsiguienteActionPerformed
 
+    private void jButtonsubirimagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonsubirimagenActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes", "png", "jpg", "jpeg"));
+    int result = fileChooser.showOpenDialog(this);
+
+    if (result == JFileChooser.APPROVE_OPTION) {
+        imagenSeleccionada = fileChooser.getSelectedFile();
+
+        //ImageIcon icon = new ImageIcon(imagenSeleccionada.getAbsolutePath());
+        imagenSeleccionada = fileChooser.getSelectedFile();
+       // Image img = icon.getImage();
+        // Escalar la imagen al tamaño del JLabel
+        //Image newImg = img.getScaledInstance(jLabel12.getWidth(), jLabel12.getHeight(), Image.SCALE_SMOOTH);
+
+        //jLabel12.setIcon(new ImageIcon(newImg));
+        guardarImagenEnCarpeta(imagenSeleccionada);
+     }
+    }//GEN-LAST:event_jButtonsubirimagenActionPerformed
+
    private void insertarMascota(String nombre, String especie, String edad, String sexo, double peso,
                              int vacunas, String historial, File imagen) {
 
-    String sql = "INSERT INTO mascota (nombre, especie, edad, sexo, peso, vacunas, historial, foto) "
-               + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO mascota (nombre, especie, edad, sexo, peso, vacunas, historial) "
+               + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try (Connection con = Conexion.getConexion();
          PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
@@ -269,13 +298,6 @@ public class JDialoginsertarmascotas extends javax.swing.JDialog {
         ps.setDouble(5, peso);
         ps.setInt(6, vacunas);
         ps.setString(7, historial);
-
-        if (imagen != null) {
-            byte[] bytes = java.nio.file.Files.readAllBytes(imagen.toPath());
-            ps.setBytes(8, bytes);
-        } else {
-            ps.setNull(8, java.sql.Types.BLOB);
-        }
 
         int filas = ps.executeUpdate();
         if (filas > 0) {
@@ -291,7 +313,7 @@ public class JDialoginsertarmascotas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No se pudo insertar la mascota.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-    } catch (SQLException | IOException e) {
+    } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Error al insertar mascota: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         logger.log(java.util.logging.Level.SEVERE, "Error al insertar mascota", e);
     }

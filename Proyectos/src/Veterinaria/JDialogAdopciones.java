@@ -101,21 +101,30 @@ public class JDialogAdopciones extends javax.swing.JDialog {
                     jPanelMascota.setBackground(Color.white);
                     jPanelMascota.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-                    // Imagen
                     String nombre = datosMascotaActual[0].toString().toLowerCase();
-                    String ruta = "/recursos/" + nombre + ".jpg";
+                    ImageIcon icono = null;
 
-                    java.net.URL url = getClass().getResource(ruta);
-                    if (url == null) {
-                        url = getClass().getResource("/recursos/default.jpg");
+                    String rutaClasspath = "/recursos/" + nombre + ".jpg";
+                    java.net.URL url = getClass().getResource(rutaClasspath);
+
+                    if (url != null) {
+                        icono = new ImageIcon(url);
+                    } else {
+                        String rutaFuera = System.getProperty("user.dir") + "/recursos/" + nombre + ".jpg";
+                        File imagenFile = new File(rutaFuera);
+
+                        if (imagenFile.exists()) {
+                            icono = new ImageIcon(imagenFile.getAbsolutePath());
+                        } else {
+                            java.net.URL urlDefault = getClass().getResource("/recursos/default.jpg");
+                            icono = new ImageIcon(urlDefault);
+                        }
                     }
 
-                    ImageIcon icono = new ImageIcon(url);
                     Image img = icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                     JLabel lblImagen = new JLabel(new ImageIcon(img));
-                    lblImagen.setBorder(new EmptyBorder(0,0,0,10));
+                    lblImagen.setBorder(new EmptyBorder(0, 0, 0, 10));
                     jPanelMascota.add(lblImagen, BorderLayout.WEST);
-
                     // Texto
                     JPanel panelTexto = new JPanel();
                     panelTexto.setBackground(Color.white);
