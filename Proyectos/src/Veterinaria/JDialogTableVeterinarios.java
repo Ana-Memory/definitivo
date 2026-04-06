@@ -232,9 +232,18 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
     private void jButtonInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertarActionPerformed
-        
-        JDialogpanelinsertarvet jpi = new JDialogpanelinsertarvet(JDialogTableVeterinarios.this, true);
-        jpi.setVisible(true);
+        String[] opciones = {"Manual", "Importar JSON/XML", "Cancelar"};
+
+        int eleccion = JOptionPane.showOptionDialog(this, "Elige el método de inserción", "Insertar Veterinario", 
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0] );
+
+        if (eleccion == 0) {
+            JDialogpanelinsertarvet jpi = new JDialogpanelinsertarvet(JDialogTableVeterinarios.this, true);
+            jpi.setVisible(true);
+
+        } else if (eleccion == 1) {
+
+        }
     }//GEN-LAST:event_jButtonInsertarActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed

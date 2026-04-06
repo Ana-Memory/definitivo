@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
-
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author julia
@@ -18,7 +20,7 @@ import javax.swing.JOptionPane;
 public class JDialogconsultamascotas extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogconsultamascotas.class.getName());
-
+    private TableRowSorter<TableModel> order;
     /**
      * Creates new form JDialogconsultamascotas
      */

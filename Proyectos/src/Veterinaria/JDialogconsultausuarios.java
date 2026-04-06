@@ -11,7 +11,10 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -20,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 public class JDialogconsultausuarios extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogconsultausuarios.class.getName());
-
+     private TableRowSorter<TableModel> order;
     /**
      * Creates new form JDialogconsultausuarios
      */
@@ -28,6 +31,8 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         cargarUsuariosEnTabla();
+         order = new TableRowSorter<>(jTableusuarios.getModel());
+        jTableusuarios.setRowSorter(order);
     }
     
     private void cargarUsuariosEnTabla() {
@@ -84,6 +89,8 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
         jLabelIniciarSesion = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableusuarios = new javax.swing.JTable();
+        jLabelbuscaDNI = new javax.swing.JLabel();
+        jTextFieldbuscaDNI = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -119,6 +126,14 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTableusuarios);
 
+        jLabelbuscaDNI.setText("busqueda por DNI");
+
+        jTextFieldbuscaDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldbuscaDNIActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -127,27 +142,30 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jButtonatras))
+                        .addComponent(jButtonatras)
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabelbuscaDNI)
+                        .addGap(28, 28, 28)
+                        .addComponent(jTextFieldbuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(132, 132, 132)
                         .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(106, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 455, Short.MAX_VALUE)
-                .addComponent(jButtonatras)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonatras)
+                    .addComponent(jLabelbuscaDNI)
+                    .addComponent(jTextFieldbuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(53, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(54, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,6 +185,18 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
     private void jButtonatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonatrasActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonatrasActionPerformed
+
+    private void jTextFieldbuscaDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldbuscaDNIActionPerformed
+         try {
+        RowFilter<Object, Object> rf = RowFilter.regexFilter(
+            "^" + jTextFieldbuscaDNI.getText(),  
+            0                                    
+        );
+        order.setRowFilter(rf);
+    } catch (Exception pse) {
+        System.out.println("Ha ocurrido un error");
+    } 
+    }//GEN-LAST:event_jTextFieldbuscaDNIActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,8 +238,10 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonatras;
     private javax.swing.JLabel jLabelIniciarSesion;
+    private javax.swing.JLabel jLabelbuscaDNI;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableusuarios;
+    private javax.swing.JTextField jTextFieldbuscaDNI;
     // End of variables declaration//GEN-END:variables
 }

@@ -34,6 +34,7 @@ public class JFrameInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupInsercionDatos = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         jLabelBienvenida = new javax.swing.JLabel();
@@ -47,9 +48,13 @@ public class JFrameInicio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPasswordFieldIncio = new javax.swing.JPasswordField();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jRadioButtonUsuarios = new javax.swing.JRadioButton();
+        jRadioButtonMascotas = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButtonIniciar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -73,7 +78,7 @@ public class JFrameInicio extends javax.swing.JFrame {
         jLabelIniciarSesion.setText("INICIAR SESIÓN");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new java.awt.GridLayout(2, 4, 0, 10));
+        jPanel3.setLayout(new java.awt.GridLayout(3, 4, 0, 10));
         jPanel3.add(jLabel7);
 
         jLabel6.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
@@ -90,6 +95,15 @@ public class JFrameInicio extends javax.swing.JFrame {
         jPanel3.add(jLabel2);
         jPanel3.add(jPasswordFieldIncio);
         jPanel3.add(jLabel10);
+        jPanel3.add(jLabel11);
+
+        buttonGroupInsercionDatos.add(jRadioButtonUsuarios);
+        jRadioButtonUsuarios.setText("Usuarios");
+        jPanel3.add(jRadioButtonUsuarios);
+
+        buttonGroupInsercionDatos.add(jRadioButtonMascotas);
+        jRadioButtonMascotas.setText("Mascotas");
+        jPanel3.add(jRadioButtonMascotas);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
@@ -104,6 +118,16 @@ public class JFrameInicio extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButtonIniciar);
+
+        jButton1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 153, 0));
+        jButton1.setText("Insertar datos de prueba");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1);
         jPanel2.add(jLabel3);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -138,7 +162,7 @@ public class JFrameInicio extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)))
+                                .addComponent(jLabelBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -200,6 +224,18 @@ public class JFrameInicio extends javax.swing.JFrame {
         r.setVisible(true);
     }//GEN-LAST:event_jLabelNuevoUsuarioMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String tablaSeleccionada;
+        if (jRadioButtonUsuarios.isSelected()) {
+            tablaSeleccionada = "usuario";
+        } else {
+            tablaSeleccionada = "mascota";
+        }
+
+        JDialogInsercionDatos jdid = new JDialogInsercionDatos(this, true, tablaSeleccionada);
+        jdid.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -247,9 +283,12 @@ public class JFrameInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupInsercionDatos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonIniciar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -266,6 +305,8 @@ public class JFrameInicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPasswordField jPasswordFieldIncio;
+    private javax.swing.JRadioButton jRadioButtonMascotas;
+    private javax.swing.JRadioButton jRadioButtonUsuarios;
     private javax.swing.JTextField jTextFieldUsuarioInicio;
     private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables

@@ -4,16 +4,7 @@
  */
 package Veterinaria;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -29,6 +20,7 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
     public JDialogpanelAdministrador(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo();
     }
 
     /**
@@ -43,11 +35,15 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         jLabelBienvenida = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jButtoninsertarvet = new javax.swing.JButton();
-        jButtonborrarvet = new javax.swing.JButton();
         jButtonusuarios = new javax.swing.JButton();
         jButtoninsertarproductos = new javax.swing.JButton();
-        jButtoninsertarmas = new javax.swing.JButton();
         jButtonconmascotas = new javax.swing.JButton();
         jButtonconsultacompras = new javax.swing.JButton();
 
@@ -62,21 +58,31 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         jLabelBienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelBienvenida.setText("Panel de Administrador");
 
+        jPanel2.setLayout(new java.awt.GridLayout(2, 7, 10, 10));
+
+        jLabel1.setText("veterinarios");
+        jPanel2.add(jLabel1);
+
+        jLabel2.setText("consultar");
+        jPanel2.add(jLabel2);
+
+        jLabel3.setText("producto");
+        jPanel2.add(jLabel3);
+
+        jLabel4.setText("mascotas");
+        jPanel2.add(jLabel4);
+
+        jLabel5.setText("compras");
+        jPanel2.add(jLabel5);
+
         jButtoninsertarvet.setForeground(new java.awt.Color(255, 153, 0));
-        jButtoninsertarvet.setText("inserta veterinarios");
+        jButtoninsertarvet.setText("administrar ");
         jButtoninsertarvet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtoninsertarvetActionPerformed(evt);
             }
         });
-
-        jButtonborrarvet.setForeground(new java.awt.Color(255, 153, 0));
-        jButtonborrarvet.setText("borrar veterinarios");
-        jButtonborrarvet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonborrarvetActionPerformed(evt);
-            }
-        });
+        jPanel2.add(jButtoninsertarvet);
 
         jButtonusuarios.setForeground(new java.awt.Color(255, 153, 0));
         jButtonusuarios.setText("consulta usuarios");
@@ -85,6 +91,7 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
                 jButtonusuariosActionPerformed(evt);
             }
         });
+        jPanel2.add(jButtonusuarios);
 
         jButtoninsertarproductos.setForeground(new java.awt.Color(255, 153, 0));
         jButtoninsertarproductos.setText("insertar productos");
@@ -93,14 +100,7 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
                 jButtoninsertarproductosActionPerformed(evt);
             }
         });
-
-        jButtoninsertarmas.setForeground(new java.awt.Color(255, 153, 0));
-        jButtoninsertarmas.setText("insertar mascotas");
-        jButtoninsertarmas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtoninsertarmasActionPerformed(evt);
-            }
-        });
+        jPanel2.add(jButtoninsertarproductos);
 
         jButtonconmascotas.setForeground(new java.awt.Color(255, 153, 0));
         jButtonconmascotas.setText("consulta mascotas");
@@ -109,6 +109,7 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
                 jButtonconmascotasActionPerformed(evt);
             }
         });
+        jPanel2.add(jButtonconmascotas);
 
         jButtonconsultacompras.setForeground(new java.awt.Color(255, 153, 0));
         jButtonconsultacompras.setText("consulta compras ");
@@ -117,31 +118,21 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
                 jButtonconsultacomprasActionPerformed(evt);
             }
         });
+        jPanel2.add(jButtonconsultacompras);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 101, Short.MAX_VALUE))
+                .addGap(0, 209, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonconsultacompras)
-                            .addComponent(jButtonconmascotas)
-                            .addComponent(jButtoninsertarmas)
-                            .addComponent(jButtoninsertarproductos)
-                            .addComponent(jButtonusuarios)
-                            .addComponent(jButtoninsertarvet))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonborrarvet)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,21 +142,9 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jLabelBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36)
-                .addComponent(jButtoninsertarvet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonborrarvet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtoninsertarproductos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtoninsertarmas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonusuarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonconmascotas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonconsultacompras)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,24 +162,26 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtoninsertarvetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoninsertarvetActionPerformed
-        JDialogpanelinsertarvet jpv = new JDialogpanelinsertarvet(JDialogpanelAdministrador.this, true);
-        jpv.setVisible(true);
+     //   JDialogpanelinsertarvet jpv = new JDialogpanelinsertarvet(JDialogpanelAdministrador.this, true);
+     //   jpv.setVisible(true);
+          JDialogTableVeterinarios jpv = new JDialogTableVeterinarios(JDialogpanelAdministrador.this, true);
+          jpv.setVisible(true);
     }//GEN-LAST:event_jButtoninsertarvetActionPerformed
 
-    private void jButtonborrarvetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonborrarvetActionPerformed
-        JDialogpanelBorrarvet jdb = new JDialogpanelBorrarvet(JDialogpanelAdministrador.this, true);
-        jdb.setVisible(true);
-    }//GEN-LAST:event_jButtonborrarvetActionPerformed
-
     private void jButtoninsertarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoninsertarproductosActionPerformed
-        JDialoginsertarProductos jdp= new JDialoginsertarProductos(JDialogpanelAdministrador.this, true);
-        jdp.setVisible(true);
-    }//GEN-LAST:event_jButtoninsertarproductosActionPerformed
+        String[] opciones = {"Manual", "Importar JSON/XML", "Cancelar"};
 
-    private void jButtoninsertarmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoninsertarmasActionPerformed
-        JDialoginsertarmascotas dp= new JDialoginsertarmascotas(JDialogpanelAdministrador.this, true);
-        dp.setVisible(true);
-    }//GEN-LAST:event_jButtoninsertarmasActionPerformed
+        int eleccion = JOptionPane.showOptionDialog(this, "Elige el método de inserción", "Insertar Veterinario", 
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0] );
+
+        if (eleccion == 0) {
+            JDialoginsertarProductos jdp= new JDialoginsertarProductos(JDialogpanelAdministrador.this, true);
+            jdp.setVisible(true);
+
+        } else if (eleccion == 1) {
+
+        }
+    }//GEN-LAST:event_jButtoninsertarproductosActionPerformed
 
     private void jButtonusuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonusuariosActionPerformed
         JDialogconsultausuarios jp= new JDialogconsultausuarios(JDialogpanelAdministrador.this, true);
@@ -216,7 +197,26 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         JDialogconsultacompras jp =new JDialogconsultacompras(JDialogpanelAdministrador.this, true);
         jp.setVisible(true);
     }//GEN-LAST:event_jButtonconsultacomprasActionPerformed
+    
+     private void ajustarImagenLogo() {
+    // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
 
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
     /**
      * @param args the command line arguments
      */
@@ -255,15 +255,19 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonborrarvet;
     private javax.swing.JButton jButtonconmascotas;
     private javax.swing.JButton jButtonconsultacompras;
-    private javax.swing.JButton jButtoninsertarmas;
     private javax.swing.JButton jButtoninsertarproductos;
     private javax.swing.JButton jButtoninsertarvet;
     private javax.swing.JButton jButtonusuarios;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelBienvenida;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }
