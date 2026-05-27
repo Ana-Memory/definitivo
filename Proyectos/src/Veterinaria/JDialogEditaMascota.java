@@ -79,7 +79,9 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.GridLayout(7, 2));
 
         jLabel1.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
@@ -149,6 +151,7 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
         jPanel2.add(jLabel8);
 
+        jButton1.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 153, 0));
         jButton1.setText("Guardar Cambios");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -158,6 +161,7 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         });
         jPanel2.add(jButton1);
 
+        jButton2.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(133, 210, 204));
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -172,10 +176,8 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

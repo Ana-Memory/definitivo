@@ -73,12 +73,8 @@ public class JDialogAdopciones extends javax.swing.JDialog {
                 mensajeArriba.setVerticalAlignment(JLabel.BOTTOM);
                 mensajeArriba.setBorder(new EmptyBorder(30, 0, 0, 0));
                 
-                JLabel mensajeCentro = new JLabel("<html><div style='text-align:center;'>"
-                                                + "Le agradecemos su interés por adoptar a una mascota,<br>"
-                                                + "pero todos los animales del refugio fueron adoptados<br>"
-                                                + "y tienen hogares permanentes."
-                                                + "</div></html>"
-                                                );
+                JLabel mensajeCentro = new JLabel("<html><div style='text-align:center;'>Le agradecemos su interés por adoptar a una mascota,<br>"
+                                                + "pero todos los animales del refugio fueron adoptados<br>y tienen hogares permanentes.</div></html>");
                 mensajeCentro.setFont(new Font("Candara", Font.BOLD, 30));
                 mensajeCentro.setForeground(new Color(52, 164, 175));
                 mensajeCentro.setHorizontalAlignment(JLabel.CENTER);
@@ -215,7 +211,7 @@ public class JDialogAdopciones extends javax.swing.JDialog {
         jPanel2.setLayout(new java.awt.GridLayout(2, 1, 0, -13));
 
         jLabel3.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(133, 210, 204));
+        jLabel3.setForeground(new java.awt.Color(52, 164, 175));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("VetPet Adopt");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);

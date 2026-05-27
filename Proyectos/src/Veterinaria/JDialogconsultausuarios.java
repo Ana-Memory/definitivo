@@ -15,6 +15,23 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.awt.Desktop;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.DriverManager;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  *
@@ -30,6 +47,7 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
     public JDialogconsultausuarios(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenPdf();
         cargarUsuariosEnTabla();
          order = new TableRowSorter<>(jTableusuarios.getModel());
         jTableusuarios.setRowSorter(order);
@@ -91,6 +109,7 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
         jTableusuarios = new javax.swing.JTable();
         jLabelbuscaDNI = new javax.swing.JLabel();
         jTextFieldbuscaDNI = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -126,7 +145,7 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTableusuarios);
 
-        jLabelbuscaDNI.setText("busqueda por DNI");
+        jLabelbuscaDNI.setText("Buscar por DNI:");
 
         jTextFieldbuscaDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,38 +153,54 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logopdf.png"))); // NOI18N
+        jLabel3.setPreferredSize(new java.awt.Dimension(86, 83));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jButtonatras)
-                        .addGap(82, 82, 82)
-                        .addComponent(jLabelbuscaDNI)
-                        .addGap(28, 28, 28)
-                        .addComponent(jTextFieldbuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabelbuscaDNI))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButtonatras)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldbuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(106, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonatras)
                     .addComponent(jLabelbuscaDNI)
                     .addComponent(jTextFieldbuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,6 +233,81 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
     } 
     }//GEN-LAST:event_jTextFieldbuscaDNIActionPerformed
 
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // Crear un JDialog para seleccionar el rol
+        JDialog dialogRol = new JDialog(this, "Seleccionar Rol", true);
+        dialogRol.setSize(300, 150);
+        dialogRol.setLocationRelativeTo(this);
+        dialogRol.setLayout(new java.awt.FlowLayout());
+
+        JButton btnCliente = new JButton("Cliente");
+        JButton btnVeterinario = new JButton("Veterinario");
+        JButton btnAdministrador = new JButton("Administrador");
+
+        dialogRol.add(btnCliente);
+        dialogRol.add(btnVeterinario);
+        dialogRol.add(btnAdministrador);
+
+        // Variable para guardar el rol seleccionado
+        final String[] rolSeleccionado = new String[1];
+
+        btnCliente.addActionListener(e -> {
+            rolSeleccionado[0] = "Cliente";
+            dialogRol.dispose();
+            generarInforme(rolSeleccionado[0]);
+        });
+
+        btnVeterinario.addActionListener(e -> {
+            rolSeleccionado[0] = "Veterinario";
+            dialogRol.dispose();
+            generarInforme(rolSeleccionado[0]);
+        });
+
+        btnAdministrador.addActionListener(e -> {
+            rolSeleccionado[0] = "Administrador";
+            dialogRol.dispose();
+            generarInforme(rolSeleccionado[0]);
+        });
+
+        dialogRol.setVisible(true);
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void generarInforme(String rol) {
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres descargar el pdf de los usuarios con rol " + rol + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            try {
+                String fileJasper = "informes/veterinariaUsuarios.jasper";
+
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("ROL", rol);
+
+                JasperPrint print = JasperFillManager.fillReport(fileJasper, parameters, Conexion.getConexion());
+
+                String outputFile = "informes/informeUsuarios.pdf";
+                JasperExportManager.exportReportToPdfFile(print, outputFile);
+
+                JOptionPane.showMessageDialog(this, "Informe generado correctamente:\n \"informeUsuarios.pdf\" se abrirá automáticamente", "PDF generado", JOptionPane.INFORMATION_MESSAGE);
+
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(new File(outputFile));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al generar el informe: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void ajustarImagenPdf(){
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(getClass().getResource("/recursos/logopdf.png"));
+        
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+        
+        jLabel3.setIcon(iconoEscalado);
+    }
     /**
      * @param args the command line arguments
      */
@@ -237,6 +347,7 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonatras;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelIniciarSesion;
     private javax.swing.JLabel jLabelbuscaDNI;
     private javax.swing.JPanel jPanel1;

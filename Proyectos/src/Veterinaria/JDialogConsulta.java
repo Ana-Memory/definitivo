@@ -4,6 +4,12 @@
  */
 package Veterinaria;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 /**
  *
  * @author DAM2Alu13
@@ -20,6 +26,8 @@ public class JDialogConsulta extends javax.swing.JDialog {
         initComponents();
         this.idCliente = idCliente;
         ajustarImagenLogo();
+        configurarSpinnerHora();
+        configurarDateChooser();
     }
     
      private void ajustarImagenLogo() {
@@ -54,14 +62,22 @@ public class JDialogConsulta extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTipo = new javax.swing.JLabel();
         jComboBoxTipo = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel1dia = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabelPrecio = new javax.swing.JLabel();
         jTextFieldPrecio = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        jLabeltiempo = new javax.swing.JLabel();
+        jSpinnerhora = new javax.swing.JSpinner();
+        jLabelDNI = new javax.swing.JLabel();
         jTextFieldid_cliente = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabelID = new javax.swing.JLabel();
         jTextFieldid_mascota = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButtonSalir = new javax.swing.JButton();
         jButtonSiguiente = new javax.swing.JButton();
@@ -73,12 +89,12 @@ public class JDialogConsulta extends javax.swing.JDialog {
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new java.awt.GridLayout(4, 2, 0, 10));
+        jPanel2.setLayout(new java.awt.GridLayout(4, 4, 10, 10));
 
-        jLabel1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel1.setText("Tipo");
-        jPanel2.add(jLabel1);
+        jLabelTipo.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabelTipo.setForeground(new java.awt.Color(105, 211, 183));
+        jLabelTipo.setText("Tipo");
+        jPanel2.add(jLabelTipo);
 
         jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Revisión", "Vacunación", "Esterilización/Castración", "Enfermedad", "Desparasitación", "Odontología", "Cirugía", "Otros" }));
         jComboBoxTipo.addActionListener(new java.awt.event.ActionListener() {
@@ -88,10 +104,16 @@ public class JDialogConsulta extends javax.swing.JDialog {
         });
         jPanel2.add(jComboBoxTipo);
 
-        jLabel2.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel2.setText("Precio");
-        jPanel2.add(jLabel2);
+        jLabel1dia.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabel1dia.setForeground(new java.awt.Color(105, 211, 183));
+        jLabel1dia.setText("Seleccionar dia");
+        jPanel2.add(jLabel1dia);
+        jPanel2.add(jDateChooser1);
+
+        jLabelPrecio.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabelPrecio.setForeground(new java.awt.Color(105, 211, 183));
+        jLabelPrecio.setText("Precio");
+        jPanel2.add(jLabelPrecio);
 
         jTextFieldPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldPrecio.setText("22.0");
@@ -103,21 +125,32 @@ public class JDialogConsulta extends javax.swing.JDialog {
         });
         jPanel2.add(jTextFieldPrecio);
 
-        jLabel3.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel3.setText("Id cliente ");
-        jPanel2.add(jLabel3);
+        jLabeltiempo.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabeltiempo.setForeground(new java.awt.Color(105, 211, 183));
+        jLabeltiempo.setText("Seleccionar hora");
+        jPanel2.add(jLabeltiempo);
+        jPanel2.add(jSpinnerhora);
+
+        jLabelDNI.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabelDNI.setForeground(new java.awt.Color(105, 211, 183));
+        jLabelDNI.setText("DNI del cliente");
+        jPanel2.add(jLabelDNI);
         jPanel2.add(jTextFieldid_cliente);
+        jPanel2.add(jLabel11);
+        jPanel2.add(jLabel8);
 
-        jLabel4.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel4.setText("id mascota");
-        jPanel2.add(jLabel4);
+        jLabelID.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabelID.setForeground(new java.awt.Color(105, 211, 183));
+        jLabelID.setText("ID de la mascota");
+        jPanel2.add(jLabelID);
         jPanel2.add(jTextFieldid_mascota);
+        jPanel2.add(jLabel7);
+        jPanel2.add(jLabel6);
 
-        jLabel5.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel5.setText("REGISTRO DE LA CONSULTA");
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("REGISTRAR CITA");
 
         jButtonSalir.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButtonSalir.setForeground(new java.awt.Color(255, 153, 0));
@@ -130,7 +163,7 @@ public class JDialogConsulta extends javax.swing.JDialog {
 
         jButtonSiguiente.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButtonSiguiente.setForeground(new java.awt.Color(255, 153, 0));
-        jButtonSiguiente.setText("Siguiente");
+        jButtonSiguiente.setText("Reservar");
         jButtonSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSiguienteActionPerformed(evt);
@@ -142,49 +175,43 @@ public class JDialogConsulta extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonSiguiente)
-                .addGap(47, 47, 47))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-                .addGap(62, 62, 62))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonSiguiente)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalir)
                     .addComponent(jButtonSiguiente))
-                .addGap(35, 35, 35))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,79 +225,159 @@ public class JDialogConsulta extends javax.swing.JDialog {
     Double precio = Double.parseDouble(jTextFieldPrecio.getText());
     String id_cliente = jTextFieldid_cliente.getText().trim(); // puede estar vacío
     
+    // Validar mascota
     if (jTextFieldid_mascota.getText().isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
+        JOptionPane.showMessageDialog(this, 
             "Por favor inserte el id de la mascota", 
-            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
     int id_mascota = Integer.parseInt(jTextFieldid_mascota.getText());
     
-    try (Connection con = Conexion.getConexion()) {
-        
-        
-        String sqlMascota = "SELECT nombre FROM mascota WHERE id = ?";
-        PreparedStatement psMascota = con.prepareStatement(sqlMascota);
-        psMascota.setInt(1, id_mascota);
-        
-        ResultSet rsMascota = psMascota.executeQuery();
-        
-        if (rsMascota.next()) {
-            
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Mascota encontrada: " + rsMascota.getString("nombre") + ". Podemos continuar.");
-
-            jButtonSiguiente.setEnabled(true);
-            
-            
-            String sqlInsert = "INSERT INTO consulta (tipo, precio, id_dueno, id_mascota) VALUES (?, ?, ?, ?)";
-             PreparedStatement psInsert = con.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
-            psInsert.setString(1, (String) jComboBoxTipo.getSelectedItem());
-            psInsert.setDouble(2, precio);
-            
-            if (id_cliente.isEmpty()) {
-                psInsert.setNull(3, java.sql.Types.VARCHAR); // cliente opcional
-            } else {
-                psInsert.setString(3, id_cliente);
-            }
-            
-            psInsert.setInt(4, id_mascota);
-            
-            int filas = psInsert.executeUpdate();
-            if (filas > 0) {
-                ResultSet rs=psInsert.getGeneratedKeys();
-                int IdGenerado=-1;
-                if(rs.next()){
-                    IdGenerado=rs.getInt(1);
-                }
-                
-                javax.swing.JOptionPane.showMessageDialog(this, 
-                    "Consulta registrada correctamente.");
-                
-                //Esto esta para forzar el result set, porque a veces no se generaba bien el id y daba error JDialogCitas
-               System.out.println("ID de consulta generado: " + IdGenerado);
-               JDialogCitas citas = new JDialogCitas(JDialogConsulta.this, true, id_cliente, IdGenerado); 
-               citas.setVisible(true);
-
-            }
-            
-        } else {
-            
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Datos incorrectos. La mascota con ID " + id_mascota + " no existe.",
-                "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
-            
-        }
-        
-    } catch (SQLException e) {
-        System.err.println(e);
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Ocurrió un error al validar los datos: " + e.getMessage(),
-            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    // Validar fecha y hora
+    java.util.Date fecha = jDateChooser1.getDate();
+    Object horaObj = jSpinnerhora.getValue();
+    
+    if (fecha == null || horaObj == null) {
+        JOptionPane.showMessageDialog(this, 
+            "Por favor seleccione fecha y hora para la cita", 
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
-            
+    
+    try (Connection con = Conexion.getConexion()) { String sqlMascota = "SELECT nombre FROM mascota WHERE id = ?";
+            PreparedStatement psMascota = con.prepareStatement(sqlMascota);
+            psMascota.setInt(1, id_mascota);
+            ResultSet rsMascota = psMascota.executeQuery();
+
+            if (rsMascota.next()) {
+                String nombreMascota = rsMascota.getString("nombre");
+                JOptionPane.showMessageDialog(this, 
+                    "Mascota encontrada: " + nombreMascota + ". Procediendo con el registro.", 
+                    "Mascota válida", JOptionPane.INFORMATION_MESSAGE);
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(fecha);
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                java.sql.Date sqlFecha = new java.sql.Date(cal.getTimeInMillis());
+
+                java.sql.Time sqlHora;
+                if (horaObj instanceof java.util.Date) {
+                    sqlHora = new java.sql.Time(((java.util.Date) horaObj).getTime());
+                } else if (horaObj instanceof String) {
+                    String h = (String) jSpinnerhora.getValue(); 
+                    if (h.length() == 5) { 
+                        h = h + ":00";     
+                    }
+                    sqlHora = java.sql.Time.valueOf(h);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Formato de hora no válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                String sqlVerificarCita = "SELECT COUNT(*) FROM reserva WHERE fecha = ? AND hora = ?";
+                PreparedStatement psVerificar = con.prepareStatement(sqlVerificarCita);
+                psVerificar.setDate(1, sqlFecha);
+                psVerificar.setTime(2, sqlHora);
+                ResultSet rsVerificar = psVerificar.executeQuery();
+                rsVerificar.next();
+                int existeCita = rsVerificar.getInt(1);
+
+                if (existeCita > 0) {
+                    JOptionPane.showMessageDialog(this, 
+                        "Ya existe una cita en esa fecha y hora (" + sqlFecha + " a las " + sqlHora + ").\n" +
+                        "Por favor, seleccione otra fecha u hora.", "Horario no disponible", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                String sqlInsert = "INSERT INTO consulta (tipo, precio, id_dueno, id_mascota) VALUES (?, ?, ?, ?)";
+                PreparedStatement psInsert = con.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+                psInsert.setString(1, (String) jComboBoxTipo.getSelectedItem());
+                psInsert.setDouble(2, precio);
+
+                if (id_cliente.isEmpty()) {
+                    psInsert.setNull(3, java.sql.Types.VARCHAR);
+                } else {
+                    psInsert.setString(3, id_cliente);
+                }
+
+                psInsert.setInt(4, id_mascota);
+
+                int filas = psInsert.executeUpdate();
+                if (filas > 0) {
+                    ResultSet rs = psInsert.getGeneratedKeys();
+                    int IdGenerado = -1;
+                    if (rs.next()) {
+                        IdGenerado = rs.getInt(1);
+                    }
+
+                    String sqlReserva = "INSERT INTO reserva (id_dueno, id_consulta, fecha, hora) VALUES (?, ?, ?, ?)";
+                    PreparedStatement psReserva = con.prepareStatement(sqlReserva);
+
+                    if (id_cliente.isEmpty()) {
+                        psReserva.setNull(1, java.sql.Types.VARCHAR);
+                    } else {
+                        psReserva.setString(1, id_cliente);
+                    }
+                    psReserva.setInt(2, IdGenerado);
+                    psReserva.setDate(3, sqlFecha);
+                    psReserva.setTime(4, sqlHora);
+
+                    int filasReserva = psReserva.executeUpdate();
+                    if (filasReserva > 0) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        String fechaFormateada = sdf.format(sqlFecha);
+                        JOptionPane.showMessageDialog(this, 
+                            "Cita reservada correctamente para el " + fechaFormateada + " a las " + sqlHora + "\n" +
+                            "ID de consulta: " + IdGenerado,  "Cita confirmada",  JOptionPane.INFORMATION_MESSAGE);
+
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "La consulta se guardó pero hubo un problema al reservar la cita.",  "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Datos incorrectos. La mascota con ID " + id_mascota + " no existe.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al validar los datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }       
     }//GEN-LAST:event_jButtonSiguienteActionPerformed
 
+        List<String> horas;
+    private void configurarSpinnerHora() {
+        horas = new ArrayList<>();
+        for (int h = 9; h <= 20; h++) {
+            horas.add(String.format("%02d:00", h));
+            horas.add(String.format("%02d:30", h));
+        }
+        javax.swing.SpinnerListModel modeloHora = new javax.swing.SpinnerListModel(horas);
+        jSpinnerhora.setModel(modeloHora);
+        JSpinner.DefaultEditor editorHora = new JSpinner.DefaultEditor(jSpinnerhora);
+        jSpinnerhora.setEditor(editorHora);
+        jSpinnerhora.setEnabled(false);
+    }
+
+   private void configurarDateChooser() {
+        jDateChooser1.addPropertyChangeListener("date", e -> {
+            if (jDateChooser1.getDate() != null) {
+                jSpinnerhora.setEnabled(true);
+
+                if (!(jSpinnerhora.getModel() instanceof javax.swing.SpinnerListModel)) {
+                    jSpinnerhora.setModel(new javax.swing.SpinnerListModel(horas));
+                }
+                jSpinnerhora.setValue(horas.get(0));
+            } else {
+                jSpinnerhora.setEnabled(false);
+            }
+        });
+    }
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonSalirActionPerformed
@@ -353,13 +460,21 @@ public class JDialogConsulta extends javax.swing.JDialog {
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JButton jButtonSiguiente;
     private javax.swing.JComboBox<String> jComboBoxTipo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel1dia;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelDNI;
+    private javax.swing.JLabel jLabelID;
+    private javax.swing.JLabel jLabelPrecio;
+    private javax.swing.JLabel jLabelTipo;
+    private javax.swing.JLabel jLabeltiempo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSpinner jSpinnerhora;
     private javax.swing.JTextField jTextFieldPrecio;
     private javax.swing.JTextField jTextFieldid_cliente;
     private javax.swing.JTextField jTextFieldid_mascota;

@@ -95,86 +95,61 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
         jTextFieldBuscanombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVeterinarios = new javax.swing.JTable();
-        jLabelBienvenida = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
+        jButtonSalir.setForeground(new java.awt.Color(133, 210, 204));
         jButtonSalir.setText("Salir");
         jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalirActionPerformed(evt);
             }
         });
+        jPanel1.add(jButtonSalir);
 
+        jButtonInsertar.setForeground(new java.awt.Color(255, 153, 0));
         jButtonInsertar.setText("Insertar");
         jButtonInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonInsertarActionPerformed(evt);
             }
         });
+        jPanel1.add(jButtonInsertar);
 
+        jButtonBorrar.setForeground(new java.awt.Color(133, 210, 204));
         jButtonBorrar.setText("Borrar");
         jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarActionPerformed(evt);
             }
         });
+        jPanel1.add(jButtonBorrar);
 
-        jLabelBuscarDNI.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelBuscarDNI.setText("Buscar por DNI");
+        jLabelBuscarDNI.setForeground(new java.awt.Color(52, 164, 175));
+        jLabelBuscarDNI.setText("Buscar por DNI:");
+        jPanel1.add(jLabelBuscarDNI);
 
         jTextFieldBuscaDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldBuscaDNIActionPerformed(evt);
             }
         });
+        jPanel1.add(jTextFieldBuscaDNI);
 
-        jLabelBuscarNombre.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelBuscarNombre.setText("Buscar por nombre");
+        jLabelBuscarNombre.setForeground(new java.awt.Color(52, 164, 175));
+        jLabelBuscarNombre.setText("Buscar por nombre:");
+        jPanel1.add(jLabelBuscarNombre);
 
         jTextFieldBuscanombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldBuscanombreActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jButtonSalir)
-                .addGap(28, 28, 28)
-                .addComponent(jButtonInsertar)
-                .addGap(30, 30, 30)
-                .addComponent(jButtonBorrar)
-                .addGap(62, 62, 62)
-                .addComponent(jLabelBuscarDNI)
-                .addGap(18, 18, 18)
-                .addComponent(jTextFieldBuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(jLabelBuscarNombre)
-                .addGap(18, 18, 18)
-                .addComponent(jTextFieldBuscanombre, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSalir)
-                    .addComponent(jButtonInsertar)
-                    .addComponent(jButtonBorrar)
-                    .addComponent(jLabelBuscarDNI)
-                    .addComponent(jTextFieldBuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelBuscarNombre)
-                    .addComponent(jTextFieldBuscanombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        jPanel1.add(jTextFieldBuscanombre);
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -194,34 +169,20 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
             jTableVeterinarios.getColumnModel().getColumn(5).setHeaderValue("Usuario");
         }
 
-        jLabelBienvenida.setFont(new java.awt.Font("Candara", 2, 36)); // NOI18N
-        jLabelBienvenida.setForeground(new java.awt.Color(133, 210, 204));
-        jLabelBienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelBienvenida.setText("Veterinarios");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+            .addComponent(jScrollPane1)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -232,18 +193,8 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
     private void jButtonInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertarActionPerformed
-        String[] opciones = {"Manual", "Importar JSON/XML", "Cancelar"};
-
-        int eleccion = JOptionPane.showOptionDialog(this, "Elige el método de inserción", "Insertar Veterinario", 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0] );
-
-        if (eleccion == 0) {
-            JDialogpanelinsertarvet jpi = new JDialogpanelinsertarvet(JDialogTableVeterinarios.this, true);
-            jpi.setVisible(true);
-
-        } else if (eleccion == 1) {
-
-        }
+        JDialogpanelinsertarvet jpi = new JDialogpanelinsertarvet(JDialogTableVeterinarios.this, true);
+        jpi.setVisible(true);
     }//GEN-LAST:event_jButtonInsertarActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
@@ -318,7 +269,6 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonInsertar;
     private javax.swing.JButton jButtonSalir;
-    private javax.swing.JLabel jLabelBienvenida;
     private javax.swing.JLabel jLabelBuscarDNI;
     private javax.swing.JLabel jLabelBuscarNombre;
     private javax.swing.JPanel jPanel1;

@@ -32,11 +32,9 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
     /**
      * Creates new form JDialogInsercionDatos
      */
-    public String tabla = "";
     private File archivoSeleccionado = null;
-    public JDialogInsercionDatos(java.awt.Frame parent, boolean modal, String tabla) {
+    public JDialogInsercionDatos(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
-        this.tabla = tabla;
         initComponents();
     }
 
@@ -61,10 +59,13 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jTextFieldNombre.setEnabled(false);
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(64, 25));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
+        jButtonSeleccionar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonSeleccionar.setForeground(new java.awt.Color(255, 153, 0));
         jButtonSeleccionar.setText("Seleccionar");
         jButtonSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,6 +74,8 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
         });
         jPanel2.add(jButtonSeleccionar);
 
+        jButtonCancelar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonCancelar.setForeground(new java.awt.Color(105, 211, 183));
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +84,8 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
         });
         jPanel2.add(jButtonCancelar);
 
+        jButtonArchivo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonArchivo.setForeground(new java.awt.Color(52, 164, 175));
         jButtonArchivo.setText("Archivo");
         jButtonArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,24 +97,25 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextFieldNombre)
+                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonArchivo)))
+                        .addComponent(jButtonArchivo)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonArchivo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonArchivo)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -122,7 +128,7 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -156,28 +162,52 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
 
     private void jButtonSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarActionPerformed
         if (archivoSeleccionado == null) {
-        JOptionPane.showMessageDialog(this, "Selecciona un archivo primero");
-        return;
-    }
-
-    String nombre = archivoSeleccionado.getName().toLowerCase();
-
-    try {
-        if (nombre.endsWith(".json")) {
-            archivoJson(archivoSeleccionado);
-        } else if (nombre.endsWith(".xml")) {
-            archivoXML(archivoSeleccionado);
-        } else {
-            JOptionPane.showMessageDialog(this, "Formato no soportado");
+            JOptionPane.showMessageDialog(this, "Selecciona un archivo primero");
+            return;
         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al procesar archivo");
-        e.printStackTrace();
-    }
+
+        String nombre = archivoSeleccionado.getName().toLowerCase();
+
+        try {
+            if (nombre.endsWith(".json")) {
+                archivoJson(archivoSeleccionado);
+            } else if (nombre.endsWith(".xml")) {
+                archivoXML(archivoSeleccionado);
+            } else {
+                JOptionPane.showMessageDialog(this, "Formato no soportado");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al procesar archivo: " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButtonSeleccionarActionPerformed
 
+    private boolean insertarProducto(String nombre, String descripcion, String tipo, double precio, int unidades) {
+        String sql = "INSERT INTO producto (nombre, descripcion, tipo, precio, unidades) VALUES (?, ?, ?, ?, ?)";
+        
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, nombre);
+            ps.setString(2, descripcion);
+            ps.setString(3, tipo);
+            ps.setDouble(4, precio);
+            ps.setInt(5, unidades);
+
+            int resultado = ps.executeUpdate();
+            return resultado > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, 
+                "Error al insertar producto '" + nombre + "': " + e.getMessage(),
+                "Error BD", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
     private void archivoXML(File archivo) throws Exception {
-        Document doc = (Document) DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(archivo);
+        Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(archivo);
         doc.getDocumentElement().normalize();
 
         NodeList lista = doc.getElementsByTagName("*");
@@ -185,45 +215,18 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
             throw new Exception("XML vacío");
         }
         Element primerElemento = (Element) lista.item(0);
-        if (primerElemento.getElementsByTagName("apellidos").getLength() > 0) {
-            if (!tabla.equalsIgnoreCase("usuario")) {
-                JOptionPane.showMessageDialog(this, "Error: archivo de usuarios en tabla incorrecta");
-                return;
-            }
+        if (primerElemento.getElementsByTagName("nombre").getLength() > 0) {
+            NodeList productos = doc.getElementsByTagName("producto");
+            for (int i = 0; i < productos.getLength(); i++) {
+                Element e = (Element) productos.item(i);
 
-            NodeList usuarios = doc.getElementsByTagName("usuario");
-            for (int i = 0; i < usuarios.getLength(); i++) {
-                Element e = (Element) usuarios.item(i);
+                String nombre = e.getElementsByTagName("nombre").item(0).getTextContent();
+                String descripcion = e.getElementsByTagName("descripcion").item(0).getTextContent();
+                String tipo = e.getElementsByTagName("tipo").item(0).getTextContent();
+                double precio = Double.parseDouble(e.getElementsByTagName("precio").item(0).getTextContent());
+                int unidades = Integer.parseInt(e.getElementsByTagName("unidades").item(0).getTextContent());
 
-                Usuario u = new Usuario();
-                u.setId(e.getElementsByTagName("id").item(0).getTextContent());
-                u.setNombre(e.getElementsByTagName("nombre").item(0).getTextContent());
-                u.setApellidos(e.getElementsByTagName("apellidos").item(0).getTextContent());
-                u.setTelefono(e.getElementsByTagName("telefono").item(0).getTextContent());
-                u.setCorreo(e.getElementsByTagName("correo").item(0).getTextContent());
-                u.setUsuario(e.getElementsByTagName("usuario").item(0).getTextContent());
-                u.setRol(e.getElementsByTagName("rol").item(0).getTextContent());
-
-                insertarUsuario(u);
-            }
-
-        } else if (primerElemento.getElementsByTagName("especie").getLength() > 0) {
-            if (!tabla.equalsIgnoreCase("mascota")) {
-                JOptionPane.showMessageDialog(this, "Error: archivo de mascotas en tabla incorrecta");
-                return;
-            }
-            NodeList mascotas = doc.getElementsByTagName("mascota");
-
-            for (int i = 0; i < mascotas.getLength(); i++) {
-                Element e = (Element) mascotas.item(i);
-                Mascota m = new Mascota();
-                m.setNombre(e.getElementsByTagName("nombre").item(0).getTextContent());
-                m.setEspecie(e.getElementsByTagName("especie").item(0).getTextContent());
-                m.setEdad(e.getElementsByTagName("edad").item(0).getTextContent());
-                m.setSexo(e.getElementsByTagName("sexo").item(0).getTextContent());
-                m.setPeso(Double.parseDouble(e.getElementsByTagName("peso").item(0).getTextContent()));
-                m.setVacunas(Boolean.parseBoolean(e.getElementsByTagName("vacunas").item(0).getTextContent()));
-                insertarMascota(m);
+                insertarProducto(nombre, descripcion, tipo, precio, unidades);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Formato XML no reconocido");
@@ -233,46 +236,32 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
     }
     private void archivoJson(File archivo) throws Exception {
         Gson gson = new Gson();
-
-        JsonArray array = JsonParser.parseReader(new FileReader(archivo)).getAsJsonArray();
-
-        if (array.size() == 0) {
-            throw new Exception("Archivo vacío");
+    
+    JsonArray array = JsonParser.parseReader(new FileReader(archivo)).getAsJsonArray();
+    
+    if (array.size() == 0) {
+        throw new Exception("Archivo vacío");
+    }
+    
+    JsonObject obj = array.get(0).getAsJsonObject();
+    
+    if (obj.has("nombre")) {
+        for (int i = 0; i < array.size(); i++) {
+            JsonObject productoObj = array.get(i).getAsJsonObject();
+            
+            String nombre = productoObj.get("nombre").getAsString();
+            String descripcion = productoObj.get("descripcion").getAsString();
+            String tipo = productoObj.get("tipo").getAsString();
+            double precio = productoObj.get("precio").getAsDouble();
+            int unidades = productoObj.get("unidades").getAsInt();
+            
+            insertarProducto(nombre, descripcion, tipo, precio, unidades);
         }
-
-        JsonObject obj = array.get(0).getAsJsonObject();
-
-        // Detectar tipo
-        if (obj.has("apellidos")) {
-            // 👉 USUARIO
-            if (!tabla.equalsIgnoreCase("usuario")) {
-                JOptionPane.showMessageDialog(this, "Error: el archivo es de USUARIOS pero la tabla actual es " + tabla);
-                return;
-            }
-
-            Usuario[] usuarios = gson.fromJson(array, Usuario[].class);
-
-            for (Usuario u : usuarios) {
-                insertarUsuario(u);
-            }
-
-        } else if (obj.has("especie")) {
-            if (!tabla.equalsIgnoreCase("mascota")) {
-                JOptionPane.showMessageDialog(this, "Error: el archivo es de MASCOTAS pero la tabla actual es " + tabla);
-                return;
-            }
-
-            Mascota[] mascotas = gson.fromJson(array, Mascota[].class);
-
-            for (Mascota m : mascotas) {
-                insertarMascota(m);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Formato JSON no reconocido");
-        }
-
-        JOptionPane.showMessageDialog(this, "Datos importados correctamente");
+    } else {
+        JOptionPane.showMessageDialog(this, "Formato JSON no reconocido");
+    }
+    
+    JOptionPane.showMessageDialog(this, "Datos importados correctamente");
     }
     
     private void insertarUsuario(Usuario u) {
@@ -348,7 +337,7 @@ public class JDialogInsercionDatos extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JDialogInsercionDatos dialog = new JDialogInsercionDatos(new javax.swing.JFrame(), true, "");
+                JDialogInsercionDatos dialog = new JDialogInsercionDatos(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

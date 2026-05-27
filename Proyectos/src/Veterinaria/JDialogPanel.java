@@ -80,15 +80,13 @@ public class JDialogPanel extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabelVets = new javax.swing.JLabel();
         jButtonVeterinarios = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jLabelInformes = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(133, 210, 204));
+        jLabel1.setForeground(new java.awt.Color(52, 164, 175));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bienvenid@ a la sección para empleados.");
 
@@ -144,21 +142,6 @@ public class JDialogPanel extends javax.swing.JDialog {
 
         jPanel2.add(jPanelVeterinario);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new java.awt.GridLayout());
-
-        jLabelInformes.setBackground(new java.awt.Color(255, 153, 0));
-        jLabelInformes.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        jLabelInformes.setForeground(new java.awt.Color(255, 153, 0));
-        jLabelInformes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelInformes.setText("VER INFORMES");
-        jLabelInformes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelInformesMouseClicked(evt);
-            }
-        });
-        jPanel3.add(jLabelInformes);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -173,10 +156,7 @@ public class JDialogPanel extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -191,9 +171,7 @@ public class JDialogPanel extends javax.swing.JDialog {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -204,7 +182,7 @@ public class JDialogPanel extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -221,10 +199,6 @@ public class JDialogPanel extends javax.swing.JDialog {
         ad.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonAdministradoresActionPerformed
-
-    private void jLabelInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelInformesMouseClicked
-        
-    }//GEN-LAST:event_jLabelInformesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -330,11 +304,9 @@ public class JDialogPanel extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelAdmins;
-    private javax.swing.JLabel jLabelInformes;
     private javax.swing.JLabel jLabelVets;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelAdministrador;
     private javax.swing.JPanel jPanelVeterinario;
     private javax.swing.JLabel logo;

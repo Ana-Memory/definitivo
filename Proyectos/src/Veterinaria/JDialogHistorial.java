@@ -31,61 +31,61 @@ public class JDialogHistorial extends javax.swing.JDialog {
     }
     
      private void cargarHistorialMascotas() {
-    // Definimos un modelo no editable
-    DefaultTableModel modelo = new DefaultTableModel(
-        new Object[][]{},
-        new String[]{
-            "Nombre", "Especie", "Edad", "Sexo", "Peso", "Vacunas", "Historial"
-        }
-    ) {
-        Class[] types = new Class[]{
-            String.class, String.class, String.class,
-            String.class, Double.class, Boolean.class,
-            String.class
+        // Definimos un modelo no editable
+        DefaultTableModel modelo = new DefaultTableModel(
+            new Object[][]{},
+            new String[]{
+                "ID", "Nombre", "Especie", "Edad", "Sexo", "Peso", "Vacunas", "Historial"
+            }
+        ) {
+            Class[] types = new Class[]{
+                Integer.class, String.class, String.class, String.class,
+                String.class, Double.class, Boolean.class, String.class
+            };
+
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
         };
 
-        boolean[] canEdit = new boolean[]{
-            false, false, false, false, false, false, false
-        };
+        jTablehistorial.setModel(modelo);
 
-        @Override
-        public Class getColumnClass(int columnIndex) {
-            return types[columnIndex];
+        String sql = "SELECT id, nombre, especie, edad, sexo, peso, vacunas, historial FROM mascota WHERE id_dueno = ?";
+
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, id_dueno);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String especie = rs.getString("especie");
+                String edad = rs.getString("edad");
+                String sexo = rs.getString("sexo");
+                double peso = rs.getDouble("peso");
+                boolean vacunas = rs.getInt("vacunas") == 1;
+                String historial = rs.getString("historial");
+
+                modelo.addRow(new Object[]{id, nombre, especie, edad, sexo, peso, vacunas, historial});
+            }
+
+        } catch (SQLException ex) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al cargar historial", ex);
+            JOptionPane.showMessageDialog(this, "No se pudo cargar el historial.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit[columnIndex];
-        }
-    };
-
-    jTablehistorial.setModel(modelo); // aplicamos el modelo a la tabla
-
-    String sql = "SELECT nombre, especie, edad, sexo, peso, vacunas, historial FROM mascota WHERE id_dueno = ?";
-
-    try (Connection conn = Conexion.getConexion();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-        stmt.setString(1, id_dueno);
-
-        ResultSet rs = stmt.executeQuery();
-
-        while (rs.next()) {
-            String nombre = rs.getString("nombre");
-            String especie = rs.getString("especie");
-            String edad = rs.getString("edad");
-            String sexo = rs.getString("sexo");
-            double peso = rs.getDouble("peso");
-            boolean vacunas = rs.getInt("vacunas") == 1;
-            String historial = rs.getString("historial");
-
-            modelo.addRow(new Object[]{nombre, especie, edad, sexo, peso, vacunas, historial});
-        }
-
-    } catch (SQLException ex) {
-        logger.log(java.util.logging.Level.SEVERE, "Error al cargar historial", ex);
-        JOptionPane.showMessageDialog(this, "No se pudo cargar el historial.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
     }
 
     /**
@@ -111,11 +111,11 @@ public class JDialogHistorial extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nombre", "especie", "edad", "sexo", "peso", "vacunas", "historial"
+                "ID", "Nombre", "Especie", "Edad", "Sexo", "Peso", "Vacunas", "Historial"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -124,38 +124,31 @@ public class JDialogHistorial extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTablehistorial);
 
+        jButtonatras.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonatras.setForeground(new java.awt.Color(133, 210, 204));
         jButtonatras.setText("Atras");
-        jButtonatras.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonatrasActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(jButtonatras)
-                .addContainerGap(388, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonatras)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(415, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jButtonatras)
-                .addGap(36, 36, 36))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(102, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -171,10 +164,6 @@ public class JDialogHistorial extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonatrasActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jButtonatrasActionPerformed
 
     /**
      * @param args the command line arguments

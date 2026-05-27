@@ -384,7 +384,7 @@ public class JDialogTienda extends javax.swing.JDialog {
                 int cantidadEnCarrito = carrito.containsKey(nombre) ? (Integer) carrito.get(nombre)[0] : 0;
 
                 if (!hayStockDisponible(nombre, cantidadEnCarrito + 1)) {
-                    JOptionPane.showMessageDialog(this, "No quedan unidades disponibles para " + nombre);
+                    JOptionPane.showMessageDialog(this, "No quedan las suficientes unidades para " + nombre + ". El producto no se añadio a su carrito");
                     continue;
                 }
 
@@ -429,95 +429,43 @@ public class JDialogTienda extends javax.swing.JDialog {
         dialogCarrito.add(scroll, BorderLayout.CENTER);
 
         JPanel panelBotones = new JPanel(new FlowLayout());
-        JButton btnQuitar = new JButton("Quitar");
-        JButton btnModificarValores = new JButton("Alterar cantidades");
-        JButton btnSalir = new JButton("OK");
-        panelBotones.add(btnQuitar);
-        panelBotones.add(btnModificarValores);
+        JButton btnEliminar = new JButton("Eliminar seleccionados");
+        JButton btnSalir = new JButton("Salir");
+        panelBotones.add(btnEliminar);
         panelBotones.add(btnSalir);
         dialogCarrito.add(panelBotones, BorderLayout.SOUTH);
 
-        btnQuitar.addActionListener(e -> {
+        // Botón para eliminar los productos seleccionados
+        btnEliminar.addActionListener(e -> {
             int[] seleccionados = listaCarrito.getSelectedIndices();
             if (seleccionados.length == 0) {
-                JOptionPane.showMessageDialog(dialogCarrito, "Selecciona productos para quitar.");
-                return;
-            }
-            for (int i = seleccionados.length - 1; i >= 0; i--) {
-                String texto = modeloListaCarrito.get(seleccionados[i]);
-                String nombreReal = texto.split(" \\(")[0];
-                carrito.remove(nombreReal);
-                modeloListaCarrito.remove(seleccionados[i]);
-            }
-            actualizarLabels();
-        });
-
-        btnModificarValores.addActionListener(e -> {
-            int[] seleccion = listaCarrito.getSelectedIndices();
-            if (seleccion.length == 0) {
-                JOptionPane.showMessageDialog(dialogCarrito, "Selecciona los productos que quieras modificar.");
+                JOptionPane.showMessageDialog(dialogCarrito, "No has seleccionado ningún producto.");
                 return;
             }
 
-            JDialog modificarDialog = new JDialog(dialogCarrito, "Modificar Cantidades", true);
-            modificarDialog.setSize(320, 120);
-            modificarDialog.setLocationRelativeTo(dialogCarrito);
-            modificarDialog.setLayout(new FlowLayout());
+            // Confirmación
+            String mensaje = "¿Estás seguro de que quieres eliminar " + seleccionados.length + " producto(s)?";
+            int confirmacion = JOptionPane.showConfirmDialog(dialogCarrito, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
-            JButton btnSumar = new JButton("+");
-            JButton btnRestar = new JButton("-");
-            JButton btnCerrar = new JButton("OK");
-
-            modificarDialog.add(btnSumar);
-            modificarDialog.add(btnRestar);
-            modificarDialog.add(btnCerrar);
-
-            btnSumar.addActionListener(ev -> {
-                int[] selNow = listaCarrito.getSelectedIndices();
-                for (int idx : selNow) {
-                    if (idx < 0 || idx >= modeloListaCarrito.getSize()) continue;
-                    String texto = modeloListaCarrito.get(idx);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                for (int i = seleccionados.length - 1; i >= 0; i--) {
+                    String texto = modeloListaCarrito.get(seleccionados[i]);
                     String nombreReal = texto.split(" \\(")[0];
-                    if (!carrito.containsKey(nombreReal)) continue;
-                    int cantidadActual = (Integer) carrito.get(nombreReal)[0];
-                    if (!hayStockDisponible(nombreReal, cantidadActual + 1)) continue;
-                    carrito.get(nombreReal)[0] = cantidadActual + 1;
-                    modeloListaCarrito.set(idx, nombreReal + " (x" + (cantidadActual + 1) + ")");
+                    carrito.remove(nombreReal);
+                    modeloListaCarrito.remove(seleccionados[i]);
                 }
-                listaCarrito.setSelectedIndices(selNow);
                 actualizarLabels();
-            });
+                JOptionPane.showMessageDialog(dialogCarrito, "Productos eliminados del carrito.");
 
-            btnRestar.addActionListener(ev -> {
-                int[] selNow = listaCarrito.getSelectedIndices();
-                java.util.Arrays.sort(selNow);
-                for (int j = selNow.length - 1; j >= 0; j--) {
-                    int idx = selNow[j];
-                    if (idx < 0 || idx >= modeloListaCarrito.getSize()) continue;
-                    String texto = modeloListaCarrito.get(idx);
-                    String nombreReal = texto.split(" \\(")[0];
-                    if (!carrito.containsKey(nombreReal)) {
-                        modeloListaCarrito.remove(idx);
-                        continue;
-                    }
-                    int cantidadActual = (Integer) carrito.get(nombreReal)[0];
-                    if (cantidadActual > 1) {
-                        carrito.get(nombreReal)[0] = cantidadActual - 1;
-                        modeloListaCarrito.set(idx, nombreReal + " (x" + (cantidadActual - 1) + ")");
-                    } else {
-                        carrito.remove(nombreReal);
-                        modeloListaCarrito.remove(idx);
-                    }
+                if (carrito.isEmpty()) {
+                    dialogCarrito.dispose();
                 }
-                if (modeloListaCarrito.getSize() > 0) listaCarrito.setSelectedIndex(0);
-                actualizarLabels();
-            });
-
-            btnCerrar.addActionListener(ev -> modificarDialog.dispose());
-            modificarDialog.setVisible(true);
+            }
         });
 
+        // Botón para salir
         btnSalir.addActionListener(e -> dialogCarrito.dispose());
+
         dialogCarrito.setVisible(true);
     }//GEN-LAST:event_jButtonCarritoActionPerformed
 

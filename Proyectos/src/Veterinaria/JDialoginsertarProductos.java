@@ -27,6 +27,7 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
     public JDialoginsertarProductos(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo(); 
     }
 
     /**
@@ -54,8 +55,9 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
         jTextFieldprecio = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextFieldunidades = new javax.swing.JTextField();
-        jButtonconfirmar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jButtonatras = new javax.swing.JButton();
+        jButtonconfirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -64,12 +66,12 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
         jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         jLabelIniciarSesion.setForeground(new java.awt.Color(52, 164, 175));
         jLabelIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelIniciarSesion.setText("insertar productos");
+        jLabelIniciarSesion.setText("Insertar Productos");
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
 
         jPanelRegistro.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelRegistro.setLayout(new java.awt.GridLayout(7, 2, 0, 10));
+        jPanelRegistro.setLayout(new java.awt.GridLayout(6, 2, 0, 10));
 
         jLabel6.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(105, 211, 183));
@@ -104,29 +106,38 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
 
         jLabel9.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel9.setText("precio");
+        jLabel9.setText("Precio");
         jPanelRegistro.add(jLabel9);
         jPanelRegistro.add(jTextFieldprecio);
 
         jLabel10.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel10.setText("unidades");
+        jLabel10.setText("Unidades");
         jPanelRegistro.add(jLabel10);
         jPanelRegistro.add(jTextFieldunidades);
 
-        jButtonconfirmar.setText("Confirmar");
-        jButtonconfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonconfirmarActionPerformed(evt);
-            }
-        });
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
+        jButtonatras.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonatras.setForeground(new java.awt.Color(255, 153, 0));
         jButtonatras.setText("Atras");
         jButtonatras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonatrasActionPerformed(evt);
             }
         });
+        jPanel2.add(jButtonatras);
+
+        jButtonconfirmar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonconfirmar.setForeground(new java.awt.Color(255, 153, 0));
+        jButtonconfirmar.setText("Confirmar");
+        jButtonconfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonconfirmarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonconfirmar);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,34 +147,25 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButtonatras)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonconfirmar)
-                                .addGap(10, 10, 10))
-                            .addComponent(jPanelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE))
+                    .addComponent(jPanelRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabelIniciarSesion)))
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addComponent(jPanelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonconfirmar)
-                    .addComponent(jButtonatras))
-                .addGap(0, 36, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -180,23 +182,31 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonatrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtonatrasActionPerformed
+
     private void jButtonconfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonconfirmarActionPerformed
-          String nombre = jTextFieldnombre.getText();
-    String descripcion = jTextFielddescripcion.getText();
-    String tipo = jComboBoxTipo.getSelectedItem().toString(); // si usas combo para tipo
-    String precioStr = jTextFieldprecio.getText();
-    String unidadesStr = jTextFieldunidades.getText();
+        String nombre = jTextFieldnombre.getText();
+        String descripcion = jTextFielddescripcion.getText();
+        String tipo = jComboBoxTipo.getSelectedItem().toString(); // si usas combo para tipo
+        String precioStr = jTextFieldprecio.getText();
+        String unidadesStr = jTextFieldunidades.getText();
 
-    try {
-        double precio = Double.parseDouble(precioStr);
-        int unidades = Integer.parseInt(unidadesStr);
+        try {
+            double precio = Double.parseDouble(precioStr);
+            int unidades = Integer.parseInt(unidadesStr);
 
-        insertarProducto(nombre, descripcion, tipo, precio, unidades);
+            insertarProducto(nombre, descripcion, tipo, precio, unidades);
 
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Precio o unidades no válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Precio o unidades no válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonconfirmarActionPerformed
+
+    private void jComboBoxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoActionPerformed
+        String tipo = (String) jComboBoxTipo.getSelectedItem();
+    }//GEN-LAST:event_jComboBoxTipoActionPerformed
 
     private void insertarProducto(String nombre, String descripcion, String tipo, double precio, int unidades) {
     String sql = "INSERT INTO producto (nombre, descripcion, tipo, precio, unidades) VALUES (?, ?, ?, ?, ?)";
@@ -222,14 +232,26 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
     }
 }
     
-    private void jComboBoxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoActionPerformed
-       String tipo = (String) jComboBoxTipo.getSelectedItem();
-    }//GEN-LAST:event_jComboBoxTipoActionPerformed
+    private void ajustarImagenLogo() {
+    // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
 
-    private void jButtonatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonatrasActionPerformed
-       this.dispose();
-    }//GEN-LAST:event_jButtonatrasActionPerformed
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
 
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -279,6 +301,7 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelIniciarSesion;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelRegistro;
     private javax.swing.JTextField jTextFielddescripcion;
     private javax.swing.JTextField jTextFieldid;
