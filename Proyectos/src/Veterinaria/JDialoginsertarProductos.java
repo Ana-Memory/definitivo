@@ -63,7 +63,7 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 2, 36)); // NOI18N
         jLabelIniciarSesion.setForeground(new java.awt.Color(52, 164, 175));
         jLabelIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelIniciarSesion.setText("Insertar Productos");
@@ -119,8 +119,8 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
-        jButtonatras.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        jButtonatras.setForeground(new java.awt.Color(255, 153, 0));
+        jButtonatras.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jButtonatras.setForeground(new java.awt.Color(105, 211, 183));
         jButtonatras.setText("Atras");
         jButtonatras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +129,7 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
         });
         jPanel2.add(jButtonatras);
 
-        jButtonconfirmar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonconfirmar.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jButtonconfirmar.setForeground(new java.awt.Color(255, 153, 0));
         jButtonconfirmar.setText("Confirmar");
         jButtonconfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -146,8 +146,9 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(12, 12, 12)
                         .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE))
                     .addComponent(jPanelRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -156,11 +157,13 @@ public class JDialoginsertarProductos extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

@@ -30,6 +30,7 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
     public JDialogTableVeterinarios(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo(); 
         cargarUsuariosEnTabla();
         order = new TableRowSorter<>(jTableVeterinarios.getModel());
         jTableVeterinarios.setRowSorter(order);
@@ -95,6 +96,7 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
         jTextFieldBuscanombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVeterinarios = new javax.swing.JTable();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -102,6 +104,7 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
+        jButtonSalir.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButtonSalir.setForeground(new java.awt.Color(133, 210, 204));
         jButtonSalir.setText("Salir");
         jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +114,7 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
         });
         jPanel1.add(jButtonSalir);
 
+        jButtonInsertar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButtonInsertar.setForeground(new java.awt.Color(255, 153, 0));
         jButtonInsertar.setText("Insertar");
         jButtonInsertar.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +124,7 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
         });
         jPanel1.add(jButtonInsertar);
 
+        jButtonBorrar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButtonBorrar.setForeground(new java.awt.Color(133, 210, 204));
         jButtonBorrar.setText("Borrar");
         jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +134,9 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
         });
         jPanel1.add(jButtonBorrar);
 
+        jLabelBuscarDNI.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabelBuscarDNI.setForeground(new java.awt.Color(52, 164, 175));
+        jLabelBuscarDNI.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelBuscarDNI.setText("Buscar por DNI:");
         jPanel1.add(jLabelBuscarDNI);
 
@@ -140,7 +147,9 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldBuscaDNI);
 
+        jLabelBuscarNombre.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabelBuscarNombre.setForeground(new java.awt.Color(52, 164, 175));
+        jLabelBuscarNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelBuscarNombre.setText("Buscar por nombre:");
         jPanel1.add(jLabelBuscarNombre);
 
@@ -163,25 +172,49 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
             new String [] {
                 "DNI", "Nombre", "Apellidos", "Telefono", "Correo", "Usuario"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTableVeterinarios);
         if (jTableVeterinarios.getColumnModel().getColumnCount() > 0) {
-            jTableVeterinarios.getColumnModel().getColumn(5).setHeaderValue("Usuario");
+            jTableVeterinarios.getColumnModel().getColumn(0).setMinWidth(12);
+            jTableVeterinarios.getColumnModel().getColumn(0).setPreferredWidth(12);
+            jTableVeterinarios.getColumnModel().getColumn(1).setMinWidth(30);
+            jTableVeterinarios.getColumnModel().getColumn(1).setPreferredWidth(30);
+            jTableVeterinarios.getColumnModel().getColumn(2).setMinWidth(40);
+            jTableVeterinarios.getColumnModel().getColumn(2).setPreferredWidth(40);
+            jTableVeterinarios.getColumnModel().getColumn(3).setMinWidth(20);
+            jTableVeterinarios.getColumnModel().getColumn(3).setPreferredWidth(20);
         }
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -227,7 +260,25 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
     } 
     }//GEN-LAST:event_jTextFieldBuscanombreActionPerformed
 
+    private void ajustarImagenLogo() {
+    // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
 
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
     /**
      * @param args the command line arguments
      */
@@ -276,5 +327,6 @@ public class JDialogTableVeterinarios extends javax.swing.JDialog {
     private javax.swing.JTable jTableVeterinarios;
     private javax.swing.JTextField jTextFieldBuscaDNI;
     private javax.swing.JTextField jTextFieldBuscanombre;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }

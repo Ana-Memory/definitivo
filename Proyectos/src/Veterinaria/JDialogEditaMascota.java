@@ -22,6 +22,7 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
     public JDialogEditaMascota(java.awt.Dialog parent, boolean modal, int idMascota) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo();
         this.idMascota = idMascota;
         
         try (Connection con = Conexion.getConexion()) {
@@ -77,12 +78,13 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new java.awt.GridLayout(7, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(7, 2, 10, 0));
 
         jLabel1.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(52, 164, 175));
@@ -172,20 +174,32 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         jPanel2.add(jButton2);
         jPanel2.add(jLabel9);
 
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
+        logo.setMaximumSize(new java.awt.Dimension(60, 60));
+        logo.setMinimumSize(new java.awt.Dimension(60, 60));
+        logo.setPreferredSize(new java.awt.Dimension(60, 60));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -223,6 +237,25 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void ajustarImagenLogo() {
+        // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
+
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
     /**
      * @param args the command line arguments
      */
@@ -286,5 +319,6 @@ public class JDialogEditaMascota extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }

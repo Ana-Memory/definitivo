@@ -85,7 +85,7 @@ public class JDialogPanel extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Candara", 2, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(52, 164, 175));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bienvenid@ a la sección para empleados.");

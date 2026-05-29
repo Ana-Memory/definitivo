@@ -210,7 +210,7 @@ public class JDialogAdopciones extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(2, 1, 0, -13));
 
-        jLabel3.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Candara", 2, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(52, 164, 175));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("VetPet Adopt");

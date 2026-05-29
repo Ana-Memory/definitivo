@@ -23,6 +23,7 @@ public class JDialogBorrarMascotas extends javax.swing.JDialog {
     public JDialogBorrarMascotas(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo();
     }
 
     /**
@@ -47,7 +48,7 @@ public class JDialogBorrarMascotas extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 2, 36)); // NOI18N
         jLabelIniciarSesion.setForeground(new java.awt.Color(52, 164, 175));
         jLabelIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelIniciarSesion.setText("Eliminar mascota");
@@ -55,9 +56,9 @@ public class JDialogBorrarMascotas extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
 
-        jLabel6.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel6.setText("ID");
+        jLabel6.setText("ID de la mascota:");
         jPanel2.add(jLabel6);
         jPanel2.add(jTextFieldeliminar);
 
@@ -82,6 +83,7 @@ public class JDialogBorrarMascotas extends javax.swing.JDialog {
         jPanel2.add(jButtonconfirmar);
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
+        logo.setPreferredSize(new java.awt.Dimension(60, 60));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,22 +96,20 @@ public class JDialogBorrarMascotas extends javax.swing.JDialog {
                         .addGap(6, 6, 6)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)))
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -162,6 +162,20 @@ public class JDialogBorrarMascotas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error al eliminar usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             logger.log(java.util.logging.Level.SEVERE, "Error al eliminar usuario", e);
         }
+    }
+     
+    private void ajustarImagenLogo() {
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
+
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+        logo.setIcon(iconoEscalado);
     }
     /**
      * @param args the command line arguments

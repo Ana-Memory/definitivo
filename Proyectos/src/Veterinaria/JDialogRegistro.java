@@ -109,7 +109,7 @@ public class JDialogRegistro extends javax.swing.JDialog {
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
 
-        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 2, 36)); // NOI18N
         jLabelIniciarSesion.setForeground(new java.awt.Color(52, 164, 175));
         jLabelIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelIniciarSesion.setText("REGISTRO DE USUARIO");
@@ -148,9 +148,9 @@ public class JDialogRegistro extends javax.swing.JDialog {
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)

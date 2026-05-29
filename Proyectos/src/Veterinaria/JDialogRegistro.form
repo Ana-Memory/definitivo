@@ -62,9 +62,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="logo" min="-2" pref="82" max="-2" attributes="0"/>
-                      <Component id="jLabelIniciarSesion" min="-2" pref="56" max="-2" attributes="0"/>
+                      <Component id="jLabelIniciarSesion" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jPanelRegistro" min="-2" pref="259" max="-2" attributes="0"/>
@@ -192,7 +192,7 @@
         <Component class="javax.swing.JLabel" name="jLabelIniciarSesion">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="24" style="1"/>
+              <Font name="Candara" size="36" style="2"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="af" green="a4" red="34" type="rgb"/>

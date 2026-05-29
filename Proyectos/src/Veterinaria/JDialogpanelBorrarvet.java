@@ -27,6 +27,7 @@ public class JDialogpanelBorrarvet extends javax.swing.JDialog {
     public JDialogpanelBorrarvet(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo();
     }
 
     /**
@@ -44,20 +45,24 @@ public class JDialogpanelBorrarvet extends javax.swing.JDialog {
         jTextFieldeliminar = new javax.swing.JTextField();
         jButtonconfirmar = new javax.swing.JButton();
         jButtonatras = new javax.swing.JButton();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 2, 36)); // NOI18N
         jLabelIniciarSesion.setForeground(new java.awt.Color(52, 164, 175));
         jLabelIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelIniciarSesion.setText("REGISTRO DE USUARIO");
+        jLabelIniciarSesion.setText("Borrar veterinario");
+        jLabelIniciarSesion.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         jLabel6.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel6.setText("Introduce el id a eliminar");
+        jLabel6.setText("Introduce el DNI del usuario");
 
+        jButtonconfirmar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonconfirmar.setForeground(new java.awt.Color(255, 153, 0));
         jButtonconfirmar.setText("Confirmar");
         jButtonconfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,51 +70,56 @@ public class JDialogpanelBorrarvet extends javax.swing.JDialog {
             }
         });
 
-        jButtonatras.setText("atras");
+        jButtonatras.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonatras.setForeground(new java.awt.Color(105, 211, 183));
+        jButtonatras.setText("Atras");
         jButtonatras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonatrasActionPerformed(evt);
             }
         });
 
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel6))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(jButtonatras)))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonatras))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonconfirmar)
-                            .addComponent(jTextFieldeliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jTextFieldeliminar)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 53, Short.MAX_VALUE)
+                                .addComponent(jButtonconfirmar))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldeliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonconfirmar)
-                    .addComponent(jButtonatras))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(jButtonatras)
+                    .addComponent(jButtonconfirmar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -164,6 +174,27 @@ public class JDialogpanelBorrarvet extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
+    
+    private void ajustarImagenLogo() {
+    // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
+
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -205,5 +236,6 @@ public class JDialogpanelBorrarvet extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelIniciarSesion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextFieldeliminar;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }

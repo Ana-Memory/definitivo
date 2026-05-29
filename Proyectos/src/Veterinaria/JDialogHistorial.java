@@ -27,6 +27,7 @@ public class JDialogHistorial extends javax.swing.JDialog {
         super(parent, modal);
         this.id_dueno=dueno;
         initComponents();
+        ajustarImagenLogo();
         cargarHistorialMascotas();
     }
     
@@ -101,6 +102,7 @@ public class JDialogHistorial extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablehistorial = new javax.swing.JTable();
         jButtonatras = new javax.swing.JButton();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -115,7 +117,7 @@ public class JDialogHistorial extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -123,10 +125,31 @@ public class JDialogHistorial extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTablehistorial);
+        if (jTablehistorial.getColumnModel().getColumnCount() > 0) {
+            jTablehistorial.getColumnModel().getColumn(0).setMinWidth(10);
+            jTablehistorial.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jTablehistorial.getColumnModel().getColumn(1).setMinWidth(30);
+            jTablehistorial.getColumnModel().getColumn(1).setPreferredWidth(30);
+            jTablehistorial.getColumnModel().getColumn(2).setMinWidth(40);
+            jTablehistorial.getColumnModel().getColumn(2).setPreferredWidth(40);
+            jTablehistorial.getColumnModel().getColumn(3).setMinWidth(10);
+            jTablehistorial.getColumnModel().getColumn(3).setPreferredWidth(10);
+            jTablehistorial.getColumnModel().getColumn(4).setMinWidth(15);
+            jTablehistorial.getColumnModel().getColumn(4).setPreferredWidth(15);
+            jTablehistorial.getColumnModel().getColumn(5).setMinWidth(10);
+            jTablehistorial.getColumnModel().getColumn(5).setPreferredWidth(10);
+            jTablehistorial.getColumnModel().getColumn(6).setMinWidth(10);
+            jTablehistorial.getColumnModel().getColumn(6).setPreferredWidth(10);
+        }
 
         jButtonatras.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButtonatras.setForeground(new java.awt.Color(133, 210, 204));
         jButtonatras.setText("Atras");
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
+        logo.setMaximumSize(new java.awt.Dimension(60, 60));
+        logo.setMinimumSize(new java.awt.Dimension(60, 60));
+        logo.setPreferredSize(new java.awt.Dimension(60, 60));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -137,7 +160,9 @@ public class JDialogHistorial extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonatras)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonatras)
+                            .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -145,8 +170,10 @@ public class JDialogHistorial extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonatras)
                 .addContainerGap())
         );
@@ -168,6 +195,26 @@ public class JDialogHistorial extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
+    private void ajustarImagenLogo() {
+        // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
+
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -207,5 +254,6 @@ public class JDialogHistorial extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablehistorial;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }

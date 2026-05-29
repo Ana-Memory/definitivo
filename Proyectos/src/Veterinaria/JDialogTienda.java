@@ -181,8 +181,8 @@ public class JDialogTienda extends javax.swing.JDialog {
         });
         jPanel2.add(jToggleButtonBuscar);
 
-        jLabel2.setFont(new java.awt.Font("Candara", 1, 52)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(133, 210, 204));
+        jLabel2.setFont(new java.awt.Font("Candara", 2, 52)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(52, 164, 175));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("VetPet Store");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -271,9 +271,9 @@ public class JDialogTienda extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

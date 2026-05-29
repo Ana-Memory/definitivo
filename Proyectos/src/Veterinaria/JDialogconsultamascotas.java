@@ -27,6 +27,7 @@ public class JDialogconsultamascotas extends javax.swing.JDialog {
     public JDialogconsultamascotas(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo();
         cargarMascotasEnTabla();
     }
       
@@ -80,6 +81,8 @@ private void cargarMascotasEnTabla() {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablehistorial = new javax.swing.JTable();
         jButtonatras = new javax.swing.JButton();
+        logo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -94,7 +97,7 @@ private void cargarMascotasEnTabla() {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -102,6 +105,22 @@ private void cargarMascotasEnTabla() {
             }
         });
         jScrollPane1.setViewportView(jTablehistorial);
+        if (jTablehistorial.getColumnModel().getColumnCount() > 0) {
+            jTablehistorial.getColumnModel().getColumn(0).setMinWidth(10);
+            jTablehistorial.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jTablehistorial.getColumnModel().getColumn(1).setMinWidth(30);
+            jTablehistorial.getColumnModel().getColumn(1).setPreferredWidth(30);
+            jTablehistorial.getColumnModel().getColumn(2).setMinWidth(40);
+            jTablehistorial.getColumnModel().getColumn(2).setPreferredWidth(40);
+            jTablehistorial.getColumnModel().getColumn(3).setMinWidth(10);
+            jTablehistorial.getColumnModel().getColumn(3).setPreferredWidth(10);
+            jTablehistorial.getColumnModel().getColumn(4).setMinWidth(20);
+            jTablehistorial.getColumnModel().getColumn(4).setPreferredWidth(20);
+            jTablehistorial.getColumnModel().getColumn(5).setMinWidth(10);
+            jTablehistorial.getColumnModel().getColumn(5).setPreferredWidth(10);
+            jTablehistorial.getColumnModel().getColumn(6).setMinWidth(10);
+            jTablehistorial.getColumnModel().getColumn(6).setPreferredWidth(10);
+        }
 
         jButtonatras.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButtonatras.setForeground(new java.awt.Color(133, 210, 204));
@@ -112,6 +131,13 @@ private void cargarMascotasEnTabla() {
             }
         });
 
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Candara", 2, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(52, 164, 175));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Consulta a las mascotas");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -121,18 +147,32 @@ private void cargarMascotasEnTabla() {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonatras)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonatras)
+                            .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(76, 76, 76)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonatras)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(243, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -153,6 +193,25 @@ private void cargarMascotasEnTabla() {
         this.dispose();
     }//GEN-LAST:event_jButtonatrasActionPerformed
 
+    private void ajustarImagenLogo() {
+    // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
+
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
     /**
      * @param args the command line arguments
      */
@@ -192,8 +251,10 @@ private void cargarMascotasEnTabla() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonatras;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablehistorial;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }

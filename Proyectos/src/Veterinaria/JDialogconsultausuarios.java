@@ -47,6 +47,7 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
     public JDialogconsultausuarios(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ajustarImagenLogo();
         ajustarImagenPdf();
         cargarUsuariosEnTabla();
          order = new TableRowSorter<>(jTableusuarios.getModel());
@@ -104,17 +105,20 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jButtonatras = new javax.swing.JButton();
-        jLabelIniciarSesion = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableusuarios = new javax.swing.JTable();
         jLabelbuscaDNI = new javax.swing.JLabel();
         jTextFieldbuscaDNI = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButtonatras.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jButtonatras.setForeground(new java.awt.Color(105, 211, 183));
         jButtonatras.setText("Atras");
         jButtonatras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,21 +126,16 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
             }
         });
 
-        jLabelIniciarSesion.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
-        jLabelIniciarSesion.setForeground(new java.awt.Color(52, 164, 175));
-        jLabelIniciarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelIniciarSesion.setText("Consulta a los usuarios");
-
         jTableusuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "id", "nombre", "apellidos", "telefono", "correo", "usuario", "rol"
+                "DNI", "Nombre", "Apellidos", "Telefono", "Correo", "Nombre de usuario", "Rol"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -144,9 +143,24 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTableusuarios);
+        if (jTableusuarios.getColumnModel().getColumnCount() > 0) {
+            jTableusuarios.getColumnModel().getColumn(0).setMinWidth(12);
+            jTableusuarios.getColumnModel().getColumn(0).setPreferredWidth(12);
+            jTableusuarios.getColumnModel().getColumn(1).setMinWidth(30);
+            jTableusuarios.getColumnModel().getColumn(1).setPreferredWidth(30);
+            jTableusuarios.getColumnModel().getColumn(2).setMinWidth(40);
+            jTableusuarios.getColumnModel().getColumn(2).setPreferredWidth(40);
+            jTableusuarios.getColumnModel().getColumn(3).setMinWidth(20);
+            jTableusuarios.getColumnModel().getColumn(3).setPreferredWidth(20);
+            jTableusuarios.getColumnModel().getColumn(6).setMinWidth(15);
+            jTableusuarios.getColumnModel().getColumn(6).setPreferredWidth(15);
+        }
 
+        jLabelbuscaDNI.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabelbuscaDNI.setForeground(new java.awt.Color(105, 211, 183));
         jLabelbuscaDNI.setText("Buscar por DNI:");
 
+        jTextFieldbuscaDNI.setForeground(new java.awt.Color(255, 153, 0));
         jTextFieldbuscaDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldbuscaDNIActionPerformed(evt);
@@ -161,45 +175,54 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
             }
         });
 
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Candara", 2, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(52, 164, 175));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Consulta a los usuarios");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabelbuscaDNI))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButtonatras)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButtonatras)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelbuscaDNI)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldbuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonatras)
-                    .addComponent(jLabelbuscaDNI)
-                    .addComponent(jTextFieldbuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldbuscaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelbuscaDNI))
+                    .addComponent(jButtonatras))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -299,6 +322,26 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
         }
     }
     
+    private void ajustarImagenLogo() {
+    // Cargar la imagen original desde los recursos
+        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
+            getClass().getResource("/recursos/logoVeterinaria.png")
+        );
+
+        // Escalar la imagen al tamaño del JLabel
+        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(
+            logo.getWidth(),
+            logo.getHeight(),
+            java.awt.Image.SCALE_SMOOTH
+        );
+
+        // Crear un nuevo icono con la imagen escalada
+        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
+
+        // Asignarlo al JLabel
+        logo.setIcon(iconoEscalado);
+    }
+    
     private void ajustarImagenPdf(){
         javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(getClass().getResource("/recursos/logopdf.png"));
         
@@ -347,12 +390,13 @@ public class JDialogconsultausuarios extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonatras;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabelIniciarSesion;
     private javax.swing.JLabel jLabelbuscaDNI;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableusuarios;
     private javax.swing.JTextField jTextFieldbuscaDNI;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }

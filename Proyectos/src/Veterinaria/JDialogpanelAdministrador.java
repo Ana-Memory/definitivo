@@ -32,7 +32,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         ajustarImagenLogo();
-        ajustarImagenPdf();
     }
 
     /**
@@ -53,8 +52,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         jButtoninsertarproductos = new javax.swing.JButton();
         jButtonconmascotas = new javax.swing.JButton();
         jButtonconsultacompras = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -62,10 +59,11 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoVeterinaria.png"))); // NOI18N
 
-        jLabelBienvenida.setFont(new java.awt.Font("Candara", 2, 36)); // NOI18N
+        jLabelBienvenida.setFont(new java.awt.Font("Candara", 2, 48)); // NOI18N
         jLabelBienvenida.setForeground(new java.awt.Color(52, 164, 175));
         jLabelBienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelBienvenida.setText("Panel de Administrador");
+        jLabelBienvenida.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(2, 7, 10, 10));
@@ -92,7 +90,7 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
 
         jButtoninsertarproductos.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jButtoninsertarproductos.setForeground(new java.awt.Color(255, 153, 0));
-        jButtoninsertarproductos.setText("Insertar Productos");
+        jButtoninsertarproductos.setText("Administrar Productos");
         jButtoninsertarproductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtoninsertarproductosActionPerformed(evt);
@@ -120,53 +118,28 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         });
         jPanel2.add(jButtonconsultacompras);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logopdf.png"))); // NOI18N
-        jLabel3.setPreferredSize(new java.awt.Dimension(86, 83));
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel1.setText("Consultar productos:");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)))
+                        .addComponent(jLabelBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -191,18 +164,28 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtoninsertarvetActionPerformed
 
     private void jButtoninsertarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoninsertarproductosActionPerformed
-        String[] opciones = {"Manual", "Importar JSON/XML", "Cancelar"};
+        String[] acciones = {"Insertar producto", "Ver/Reestablecer stock", "Cancelar"};
+        
+        int eleccionAccion = JOptionPane.showOptionDialog(this, "Elige el método de inserción", "Insertar Veterinario", 
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, acciones, acciones[0] );
+        
+        if (eleccionAccion == 0){
+            String[] opciones = {"Manual", "Importar JSON/XML", "Cancelar"};
 
-        int eleccion = JOptionPane.showOptionDialog(this, "Elige el método de inserción", "Insertar Veterinario", 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0] );
+            int eleccion = JOptionPane.showOptionDialog(this, "Elige el método de inserción", "Insertar Veterinario", 
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0] );
 
-        if (eleccion == 0) {
-            JDialoginsertarProductos jdp= new JDialoginsertarProductos(JDialogpanelAdministrador.this, true);
-            jdp.setVisible(true);
+            if (eleccion == 0) {
+                JDialoginsertarProductos jdp= new JDialoginsertarProductos(JDialogpanelAdministrador.this, true);
+                jdp.setVisible(true);
 
-        } else if (eleccion == 1) {
-            JDialogInsercionDatos jdid = new JDialogInsercionDatos(this, true);
-            jdid.setVisible(true);
+            } else if (eleccion == 1) {
+                JDialogInsercionDatos jdid = new JDialogInsercionDatos(this, true);
+                jdid.setVisible(true);
+            }
+        } else if (eleccionAccion == 1) {
+            JDialogStock jds = new JDialogStock(this, true);
+            jds.setVisible(true);
         }
     }//GEN-LAST:event_jButtoninsertarproductosActionPerformed
 
@@ -220,33 +203,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
         JDialogconsultacompras jp =new JDialogconsultacompras(JDialogpanelAdministrador.this, true);
         jp.setVisible(true);
     }//GEN-LAST:event_jButtonconsultacomprasActionPerformed
-
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres descargar el pdf de los productos?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
-        if (respuesta == JOptionPane.YES_OPTION) {
-            try {
-                String fileJasper = "informes/veterinariaProductos.jasper";
-
-                Map<String, Object> parameters = new HashMap<>();
-                parameters.put("CANTIDAD", 0);
-
-                JasperPrint print = JasperFillManager.fillReport(fileJasper, parameters, Conexion.getConexion());
-
-                String outputFile = "informes/informeProductos.pdf";
-                JasperExportManager.exportReportToPdfFile(print, outputFile);
-
-                JOptionPane.showMessageDialog(this, "Informe generado correctamente:\n \"informeProductos.pdf\" se abrirá automáticamente", "PDF generado", JOptionPane.INFORMATION_MESSAGE);
-
-                if (Desktop.isDesktopSupported()) {
-                    Desktop.getDesktop().open(new File(outputFile));
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error al generar el informe: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_jLabel3MouseClicked
         
      private void ajustarImagenLogo() {
     // Cargar la imagen original desde los recursos
@@ -266,16 +222,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
 
         // Asignarlo al JLabel
         logo.setIcon(iconoEscalado);
-    }
-     
-     private void ajustarImagenPdf(){
-        javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(getClass().getResource("/recursos/logopdf.png"));
-        
-        java.awt.Image imagenEscalada = originalIcon.getImage().getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), java.awt.Image.SCALE_SMOOTH);
-        
-        javax.swing.ImageIcon iconoEscalado = new javax.swing.ImageIcon(imagenEscalada);
-        
-        jLabel3.setIcon(iconoEscalado);
     }
     /**
      * @param args the command line arguments
@@ -320,8 +266,6 @@ public class JDialogpanelAdministrador extends javax.swing.JDialog {
     private javax.swing.JButton jButtoninsertarproductos;
     private javax.swing.JButton jButtoninsertarvet;
     private javax.swing.JButton jButtonusuarios;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelBienvenida;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

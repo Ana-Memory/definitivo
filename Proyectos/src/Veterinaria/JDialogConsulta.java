@@ -31,7 +31,7 @@ public class JDialogConsulta extends javax.swing.JDialog {
     }
     
      private void ajustarImagenLogo() {
-    // Cargar la imagen original desde los recursos
+        // Cargar la imagen original desde los recursos
         javax.swing.ImageIcon originalIcon = new javax.swing.ImageIcon(
             getClass().getResource("/recursos/logoVeterinaria.png")
         );
@@ -106,7 +106,8 @@ public class JDialogConsulta extends javax.swing.JDialog {
 
         jLabel1dia.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel1dia.setForeground(new java.awt.Color(105, 211, 183));
-        jLabel1dia.setText("Seleccionar dia");
+        jLabel1dia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1dia.setText("   Seleccionar dia");
         jPanel2.add(jLabel1dia);
         jPanel2.add(jDateChooser1);
 
@@ -127,7 +128,8 @@ public class JDialogConsulta extends javax.swing.JDialog {
 
         jLabeltiempo.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabeltiempo.setForeground(new java.awt.Color(105, 211, 183));
-        jLabeltiempo.setText("Seleccionar hora");
+        jLabeltiempo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabeltiempo.setText("   Seleccionar hora");
         jPanel2.add(jLabeltiempo);
         jPanel2.add(jSpinnerhora);
 
@@ -147,8 +149,8 @@ public class JDialogConsulta extends javax.swing.JDialog {
         jPanel2.add(jLabel7);
         jPanel2.add(jLabel6);
 
-        jLabel5.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(105, 211, 183));
+        jLabel5.setFont(new java.awt.Font("Candara", 2, 48)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(52, 164, 175));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("REGISTRAR CITA");
 
