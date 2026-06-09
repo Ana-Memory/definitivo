@@ -57,23 +57,20 @@ public class JDialogStock extends javax.swing.JDialog {
              ResultSet rs = st.executeQuery("SELECT id, nombre, unidades FROM producto ORDER BY id")) {
 
             StringBuilder sb = new StringBuilder();
-            sb.append("ID   PRODUCTO\t\t\tUNIDADES\n");
-            sb.append("=============================================\n\n");
+            sb.append(String.format("%-5s %-35s %-10s\n", "ID", "PRODUCTO", "UNIDADES"));
+            sb.append("======================================================\n\n");
 
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
                 int unidades = rs.getInt("unidades");
-                String texto = id + "-" + nombre + ":\t\t" + unidades + "\n";
-                sb.append(texto);
+                sb.append(String.format("%-5d %-35s %-10d\n", id, truncateString(nombre, 35), unidades));
             }
 
             jTextPane1.setText(sb.toString());
-
             jTextPane1.setEditable(false);
             jTextPane1.setContentType("text/plain");
-
-            jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            jTextPane1.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
 
             StyledDocument doc = jTextPane1.getStyledDocument();
             SimpleAttributeSet left = new SimpleAttributeSet();
@@ -85,6 +82,14 @@ public class JDialogStock extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error al cargar productos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+// Método auxiliar para truncar strings largos
+private String truncateString(String str, int maxLength) {
+    if (str.length() <= maxLength) {
+        return str;
+    }
+    return str.substring(0, maxLength - 3) + "...";
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,7 +174,7 @@ public class JDialogStock extends javax.swing.JDialog {
                         .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
                         .addComponent(jButtonReestablecer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -225,10 +230,10 @@ public class JDialogStock extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Tienes que introducir el ID del producto.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         int idProducto;
         int cantidad;
-        
+
         try {
             idProducto = Integer.parseInt(jTextFieldIDProducto.getText().trim());
             cantidad = (int) jSpinnerCantidad.getValue();
@@ -236,31 +241,31 @@ public class JDialogStock extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "El ID del producto debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if (cantidad <= 0) {
             JOptionPane.showMessageDialog(this, "Debes comprar por lo menos 1 unidad.", "Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         try (Connection con = Conexion.getConexion()) {
             String sqlCheck = "SELECT nombre, unidades FROM producto WHERE id = ?";
             PreparedStatement psCheck = con.prepareStatement(sqlCheck);
             psCheck.setInt(1, idProducto);
             ResultSet rs = psCheck.executeQuery();
-            
+
             if (!rs.next()) {
                 JOptionPane.showMessageDialog(this, "No existe ningún producto con el ID " + idProducto, "Producto no encontrado", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+
             String nombreProducto = rs.getString("nombre");
             int stockActual = rs.getInt("unidades");
-            
+
             int confirmacion = JOptionPane.showConfirmDialog(this, 
                 "¿Está seguro de que quiere comprar " + cantidad + " unidades del producto:\n" + nombreProducto + "?",
                 "Confirmar compra", JOptionPane.YES_NO_OPTION);
-            
-            if (confirmacion != JOptionPane.YES_OPTION) {
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
                 String sqlUpdate = "UPDATE producto SET unidades = unidades + ? WHERE id = ?";
                 PreparedStatement psUpdate = con.prepareStatement(sqlUpdate);
                 psUpdate.setInt(1, cantidad);
@@ -271,16 +276,17 @@ public class JDialogStock extends javax.swing.JDialog {
                 if (filasActualizadas > 0) {
                     JOptionPane.showMessageDialog(this, 
                         "Stock del producto: " + nombreProducto + " actualizado correctamente.\n" +
-                        "Se añadieron " + cantidad + " unidades.\n", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        "Se añadieron " + cantidad + " unidades.\n" +
+                        "Stock anterior: " + stockActual + " | Stock actual: " + (stockActual + cantidad), 
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
                     jTextFieldIDProducto.setText("");
                     jSpinnerCantidad.setValue(0);
-                    cargarProductos();
+                    cargarProductos(); 
                 } else {
                     JOptionPane.showMessageDialog(this, "No se pudo actualizar el stock.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } else 
-                return;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al actualizar stock: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

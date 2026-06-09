@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 2.0//EN"
+ "http://java.sun.com/products/javahelp/map_2_0.dtd">
+
+<map version="2.0">
+
+    <!-- Pantallas generales -->
+    <mapID target="inicio" url="inicio.html"/>
+    <mapID target="login" url="login.html"/>
+    <mapID target="menu" url="menu.html"/>
+
+    <!-- Opciones del menu -->
+    <mapID target="adoptar" url="adoptar.html"/>
+    <mapID target="productos" url="productos.html"/>
+    <mapID target="historial" url="historial.html"/>
+    <mapID target="citas" url="citas.html"/>
+    <mapID target="panelcontrol" url="panelcontrol.html"/>
+
+    <!-- Panel veterinario -->
+    <mapID target="vet_citas" url="vet_citas.html"/>
+    <mapID target="vet_mascotas" url="vet_mascotas.html"/>
+
+    <!-- Panel administrador -->
+    <mapID target="admin_vets" url="admin_vets.html"/>
+    <mapID target="admin_usuarios" url="admin_usuarios.html"/>
+    <mapID target="admin_productos" url="admin_productos.html"/>
+    <mapID target="admin_mascotas" url="admin_mascotas.html"/>
+    <mapID target="admin_compras" url="admin_compras.html"/>
+
+</map>
+

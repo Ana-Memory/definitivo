@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
+ "http://java.sun.com/products/javahelp/toc_2_0.dtd">
+
+<toc version="2.0">
+
+    <tocitem text="Inicio" target="inicio"/>
+
+    <tocitem text="Pantalla de Login" target="login"/>
+
+    <tocitem text="Menú Principal" target="menu">
+        <tocitem text="Adoptar Mascotas" target="adoptar"/>
+        <tocitem text="Comprar Productos" target="productos"/>
+        <tocitem text="Ver Historial Médico" target="historial"/>
+        <tocitem text="Agendar Cita" target="citas"/>
+        <tocitem text="Panel de Control" target="panelcontrol"/>
+    </tocitem>
+
+    <tocitem text="Panel del Veterinario">
+        <tocitem text="Ver Citas" target="vet_citas"/>
+        <tocitem text="Ver Mascotas" target="vet_mascotas"/>
+    </tocitem>
+
+    <tocitem text="Panel del Administrador">
+        <tocitem text="Gestionar Veterinarios" target="admin_vets"/>
+        <tocitem text="Consultar Usuarios" target="admin_usuarios"/>
+        <tocitem text="Administrar Productos" target="admin_productos"/>
+        <tocitem text="Consultar Mascotas" target="admin_mascotas"/>
+        <tocitem text="Consultar Compras" target="admin_compras"/>
+    </tocitem>
+
+</toc>
+
